@@ -497,7 +497,7 @@ function AddPieceToPlayfieldMemory(TempOrCurrentOrNextOrDropShadow)
 	if ( (DisplayDropShadow === false)&&(TempOrCurrentOrNextOrDropShadow === DropShadow) )
 		return;
 
-        if (PlayerInput[Player] == Mouse && TempOrCurrentOrNextOrDropShadow === DropShadow)  return;
+        if (PlayerInput[Player] === Mouse && TempOrCurrentOrNextOrDropShadow === DropShadow)  return;
 
 	var TEMP_Piece = Piece[Player];
 	var TEMP_PieceRotation = PieceRotation[Player];
@@ -506,7 +506,7 @@ function AddPieceToPlayfieldMemory(TempOrCurrentOrNextOrDropShadow)
 
 	var value = Piece[Player]+10;
 
-	if (TempOrCurrentOrNextOrDropShadow == Next)
+	if (TempOrCurrentOrNextOrDropShadow === Next)
 	{
 		Piece[Player] = NextPiece[Player];
 		value = NextPiece[Player]+10;
@@ -769,27 +769,27 @@ function FirstPieceHasFallenCheck()
 {
     if (Player !== 2)  return;
     
-    if (PlayersCanJoin == true)
+    if (PlayersCanJoin === true)
     {
-        if (PlayerStatus[0] == GameOver && CPUPlayerEnabled > 0)
+        if (PlayerStatus[0] === GameOver && CPUPlayerEnabled > 0)
         {
             PlayerInput[0] = CPU;
             PlayerStatus[0] = NewPieceDropping;
         }
 
-        if (PlayerStatus[1] == GameOver && CPUPlayerEnabled > 0)
+        if (PlayerStatus[1] === GameOver && CPUPlayerEnabled > 0)
         {
             PlayerInput[1] = CPU;
             PlayerStatus[1] = NewPieceDropping;
         }
 
-        if (PlayerStatus[3] == GameOver && CPUPlayerEnabled > 0)
+        if (PlayerStatus[3] === GameOver && CPUPlayerEnabled > 0)
         {
             PlayerInput[3] = CPU;
             PlayerStatus[3] = NewPieceDropping;
         }
 
-        if (PlayerStatus[4] == GameOver && CPUPlayerEnabled > 0)
+        if (PlayerStatus[4] === GameOver && CPUPlayerEnabled > 0)
         {
             PlayerInput[4] = CPU;
             PlayerStatus[4] = NewPieceDropping;
@@ -802,7 +802,7 @@ function FirstPieceHasFallenCheck()
 //-------------------------------------------------------------------------------------------------
 function MovePieceDown(Force)
 {       
-        if (Force == false)
+        if (Force === false)
 	{
 		if (PlayerInput[Player] === CPU)
 		{
@@ -895,7 +895,7 @@ function MovePieceDownFast()
 //-------------------------------------------------------------------------------------------------
 function MovePieceDownFastDropAndDrag()
 {
-    if (PieceCollisionDown() == true)
+    if (PieceCollisionDown() === true)
     {
 
     }
@@ -927,7 +927,7 @@ function RotatePieceCounterClockwise()
 
 		GameDisplayChanged = true;
 
-		return(true);
+		return true;
 	}
 	else
 	{
@@ -938,7 +938,7 @@ function RotatePieceCounterClockwise()
 		else  RotateDirection[Player] = 0;
 	}
 
-	return(false);
+	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -953,7 +953,7 @@ function RotatePieceClockwise()
 
 		GameDisplayChanged = true;
 
-		return(true);
+		return true;
 	}
 	else
 	{
@@ -964,13 +964,13 @@ function RotatePieceClockwise()
 		else  RotateDirection[Player] = 0;
 	}
 
-	return(false);
+	return false;
 }
 
 //-------------------------------------------------------------------------------------------------
 function MovePieceLeft()
 {
-    if (DelayAutoShift == 0)
+    if (DelayAutoShift === 0)
     {
 		if (PieceMovementDelay[Player] > -15)  PieceMovementDelay[Player]--;
 		if ( (PieceMovementDelay[Player] === -1)
@@ -1037,7 +1037,7 @@ function MovePieceLeft()
 //-------------------------------------------------------------------------------------------------
 function MovePieceRight()
 {
-    if (DelayAutoShift == 0)
+    if (DelayAutoShift === 0)
     {
 		if (PieceMovementDelay[Player] < 15)  PieceMovementDelay[Player]++;
 		if ( (PieceMovementDelay[Player] === 1)
@@ -1209,7 +1209,7 @@ var y;
 		FlashCompletedLinesTimer[player] = 0;
 		ClearCompletedLinesTimer[player] = 0;
 
-        if (FirefoxStoryModeStarted == false)
+        if (FirefoxStoryModeStarted === false)
         {
             Score[player] = 0;
 
@@ -1294,18 +1294,18 @@ var y;
         PlayerStatus[4] = NewPieceDropping;
     }
 
-    if (DEBUG === true && GameMode == FirefoxStoryMode)
+    if (DEBUG === true && GameMode === FirefoxStoryMode)
     {
         PlayerStatus[4] = GameOver;
 
-        if (FirefoxStoryModeStarted == false)
+        if (FirefoxStoryModeStarted === false)
         {
             Level[0] = 24;
             Lines[0] = 249;
         }
     }
 
-	if (DEBUG === true && GameMode == OriginalMode)
+	if (DEBUG === true && GameMode === OriginalMode)
 	{
 		Score[0] = 3652096;
 		Level[0] = 256;
@@ -1483,7 +1483,7 @@ var y;
 		FlashCompletedLinesTimer[player] = 0;
 		ClearCompletedLinesTimer[player] = 0;
 
-        if (FirefoxStoryModeStarted == false)
+        if (FirefoxStoryModeStarted === false)
         {
             Score[player] = 0;
 
@@ -1568,18 +1568,18 @@ var y;
         PlayerStatus[4] = NewPieceDropping;
     }
 
-    if (DEBUG === true && GameMode == FirefoxStoryMode)
+    if (DEBUG === true && GameMode === FirefoxStoryMode)
     {
         PlayerStatus[4] = GameOver;
 
-        if (FirefoxStoryModeStarted == false)
+        if (FirefoxStoryModeStarted === false)
         {
             Level[0] = 24;
             Lines[0] = 249;
         }
     }
 
-	if (DEBUG === true && GameMode == OriginalMode)
+	if (DEBUG === true && GameMode === OriginalMode)
 	{
 		Score[0] = 3652096;
 		Level[0] = 256;
@@ -1843,7 +1843,7 @@ var xTwo;
 				boxTotal++;
 		}
 
-		if (boxTotal == 10)
+		if (boxTotal === 10)
 		{
 			thereWasACompletedLine = true;
 
@@ -1866,7 +1866,7 @@ var xTwo;
 
 				if (Lines[Player] % 10 === 0)
 				{
-					if (GameMode == CrisisMode)
+					if (GameMode === CrisisMode)
 					{
 						var playersAlive = 0;
 						if (PlayerStatus[0] !== GameOver)  playersAlive++;
@@ -1910,10 +1910,10 @@ var xTwo;
 							if (TimeToDropPiece[Player] > 3)  TimeToDropPiece[Player]-=2;
 							PlaySoundEffect(8);
                                                         
-                            if (GameMode == FirefoxStoryMode && Player == 0)
+                            if (GameMode === FirefoxStoryMode && Player === 0)
                             {
-                                if (Level[0] == 5 || Level[0] == 10 || Level[0] == 15 || Level[0] == 20
-                                 || Level[0] == 25 || Level[0] == 30)  ScreenFadeStatus = 1;
+                                if (Level[0] === 5 || Level[0] === 10 || Level[0] === 15 || Level[0] === 20
+                                 || Level[0] === 25 || Level[0] === 30)  ScreenFadeStatus = 1;
 
                             }
 						}
@@ -1955,7 +1955,7 @@ var y;
 					}
 				}
 
-				if (PieceCollisionDown() == true)  MovePieceDown(true);
+				if (PieceCollisionDown() === true)  MovePieceDown(true);
 
 				if (PlayerStatus[Player] !== FlashingCompletedLines
 				   && PlayerStatus[Player] !== ClearingCompletedLines)
@@ -2005,7 +2005,7 @@ var y;
 
 	if (PlayerStatus[Player] === FlashingCompletedLines || PlayerStatus[Player] === ClearingCompletedLines)
 	{
-		return(false);
+		return false;
 	}
 
 	PlaySoundEffect(10);
@@ -2015,15 +2015,15 @@ var y;
 		if (Playfield[Player][x][5] > 10 && Playfield[Player][x][5] < 20)
 		{
 			PlayerStatus[Player] = GameOver;
-			return(true);
+			return true;
 		}
 	}
 
-	if (PieceCollisionDown() == true)  MovePieceDown(true);
+	if (PieceCollisionDown() === true)  MovePieceDown(true);
 
 	if (PlayerStatus[Player] === FlashingCompletedLines || PlayerStatus[Player] === ClearingCompletedLines)
 	{
-		return(false);
+		return false;
 	}
 
 	for (y = 5; y < 23; y++)
@@ -2048,7 +2048,7 @@ var y;
 	}
 
 	GameDisplayChanged = true;
-	return(true);
+	return true;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -2107,7 +2107,7 @@ var x;
 			{
 				if (DEBUG === false)  PieceDropTimer[Player]++;
 
-				if (PlayerInput[Player] != CPU && JoystickDirection[ PlayerInput[Player] ] === DOWN)
+				if (PlayerInput[Player] !== CPU && JoystickDirection[ PlayerInput[Player] ] === DOWN)
 				{
 					PieceDropTimer[Player] = 1+TimeToDropPiece[Player];
 				}
@@ -2242,7 +2242,7 @@ var x;
                         {
                             for (x = 2; x < 12; x++)
                             {
-                                if (x == PiecePlayfieldX[Player] && y == PiecePlayfieldY[Player])
+                                if (x === PiecePlayfieldX[Player] && y === PiecePlayfieldY[Player])
                                 {
                                     PieceMouseScreenX = boxScreenX;
                                     PieceMouseScreenY = boxScreenY;
@@ -2275,10 +2275,10 @@ var x;
                             boxScreenY+=18;
                         }
 
-                        if (MouseButtonDown == true)
+                        if (MouseButtonDown === true)
                         {
                             if ( (MouseMovePlayfieldY < PiecePlayfieldY[Player])
-                            || (PiecePlayfieldX[Player] == MouseMovePlayfieldX && PiecePlayfieldY[Player] == MouseMovePlayfieldY) )
+                            || (PiecePlayfieldX[Player] === MouseMovePlayfieldX && PiecePlayfieldY[Player] === MouseMovePlayfieldY) )
                             {
                                 if (RotateDirection[Player] === 0)
                                 {
@@ -2291,7 +2291,7 @@ var x;
                                     UPActionTaken[Player] = true;
                                 }
                             }
-                            else if (PiecePlayfieldX[Player] == MouseMovePlayfieldX && MouseMovePlayfieldY > PiecePlayfieldY[Player])
+                            else if (PiecePlayfieldX[Player] === MouseMovePlayfieldX && MouseMovePlayfieldY > PiecePlayfieldY[Player])
                             {
                                 MovePieceDown();
                                 UPActionTaken[Player] = true;
@@ -2310,7 +2310,7 @@ var x;
                         else  UPActionTaken[Player] = false;
                     }
 
-					if ( (GameMode === CrisisMode || GameMode === FirefoxStoryMode) && DEBUG == false)
+					if ( (GameMode === CrisisMode || GameMode === FirefoxStoryMode) && DEBUG === false)
 					{
 						for (x = 0; x < 10; x++)
 						{
@@ -2327,7 +2327,7 @@ var x;
                             if (PlayerStatus[player] === GameOver)  numberOfPlayersAlive--;
                         }
 
-                        if (  numberOfPlayersAlive === 1 && ( (GameMode == CrisisMode && PlayersCanJoin == false) || GameMode == FirefoxStoryMode )  )
+                        if (  numberOfPlayersAlive === 1 && ( (GameMode === CrisisMode && PlayersCanJoin === false) || GameMode === FirefoxStoryMode )  )
 						{
 							if (CrisisModeOnePlayerLeftPlayfieldCleared === false && PlayerStatus[Player] === PieceFalling)
 							{

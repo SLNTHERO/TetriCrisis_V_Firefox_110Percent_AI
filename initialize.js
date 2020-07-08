@@ -87,25 +87,36 @@ function InitSettings()
     
    var canvas = document.createElement('canvas');
    var canvasFallingLetters = document.createElement('canvas');
+
+    canvas.id = "ScreenCanvas";
+    canvas.width = 800;
+    canvas.height = 480;
+    canvas.style.zIndex  = 0;
+    canvas.style.position = "absolute";
+    canvas.style.border = "0px solid";
+
+
+
+
    if ( Browser === "Google Android" || Browser === "Apple iOS" || Browser === "Mobile Unknown" )
    {     
-        canvas.id = "ScreenCanvas";
-        canvas.width = 800;
-        canvas.height = 480;
-        canvas.style.zIndex  = 0;
-        canvas.style.position = "absolute";
-        canvas.style.border = "0px solid";
+//        canvas.id = "ScreenCanvas";
+//        canvas.width = 800;
+//        canvas.height = 480;
+//        canvas.style.zIndex  = 0;
+//        canvas.style.position = "absolute";
+//        canvas.style.border = "0px solid";
         canvas.style.top = "0%";
         canvas.style.left = "0%";
    }
    else
    {
-        canvas.id = "ScreenCanvas";
-        canvas.width = 800;
-        canvas.height = 480;
-        canvas.style.zIndex  = 0;
-        canvas.style.position = "absolute";
-        canvas.style.border = "0px solid";
+//        canvas.id = "ScreenCanvas";
+//        canvas.width = 800;
+//        canvas.height = 480;
+//        canvas.style.zIndex  = 0;
+//        canvas.style.position = "absolute";
+//        canvas.style.border = "0px solid";
         canvas.style.top = "50%";
         canvas.style.left = "50%";
     }
@@ -161,7 +172,7 @@ function Init()
     InitLoaded = true;
     
     var test_canvas = document.createElement("canvas");
-    var canvascheck=(test_canvas.getContext)? true : false;
+    var canvascheck=!!(test_canvas.getContext);
     if (canvascheck === false)  alert("This browser does not support HTML5, get Mozilla Firefox or Google Chrome!");
     
     GamepadUP = GamepadAxisOne;

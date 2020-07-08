@@ -91,7 +91,7 @@ let ControlScheme;
 
 //let Player;
 
-let FixTitleScreenMusic = false;
+//let FixTitleScreenMusic = false;
 
 let DelayToLoadAudio = 1;//100;
 
@@ -181,7 +181,7 @@ var index;
     else if (ScreenToDisplay === 11)  DisplayStoryVideo();
 	else if (ScreenToDisplay === 12)  DisplayAITestScreen();
 	
-    if (DEBUG === true && PAUSEgame === false && ScreenToDisplay != 9)
+    if (DEBUG === true && PAUSEgame === false && ScreenToDisplay !== 9)
     {
         var screenY = 395;
         var screenYoffset = 15;
@@ -1245,7 +1245,7 @@ function DisplayHighScoresScreen()
 
             DrawTextOntoCanvas(20, HighScoresName[GameMode][indexAdjusted], 36, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
 
-            if ( (GameMode == 5 && HighScoresLevel[GameMode][indexAdjusted] == 10) || (GameMode == 6 && HighScoresLevel[GameMode][indexAdjusted] == 31) )
+            if ( (GameMode === 5 && HighScoresLevel[GameMode][indexAdjusted] === 10) || (GameMode === 6 && HighScoresLevel[GameMode][indexAdjusted] === 31) )
         	    DrawTextOntoCanvas(20, "Won!", 500, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
             else
         	    DrawTextOntoCanvas(20, ""+HighScoresLevel[GameMode][indexAdjusted]+"", 500, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
@@ -1332,7 +1332,7 @@ var index;
             PreloadedStaffTextsScreenY[index]-=1.25;
         }
         
-        if (PreloadedStaffTextsScreenY[NumberOfPreloadedStaffTexts] < -30 || JoystickButtonOne[Any] == true || MouseButtonClicked === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/")
+        if (PreloadedStaffTextsScreenY[NumberOfPreloadedStaffTexts] < -30 || JoystickButtonOne[Any] === true || MouseButtonClicked === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/")
         {
             for (index = 0; index < (NumberOfPreloadedStaffTexts+1); index++)
             {
@@ -1526,7 +1526,7 @@ var x;
                 boxScreenY+=18;
             }
             
-            if (PlayerInput[player] == Mouse && PlayerStatus[player] == PieceFalling)
+            if (PlayerInput[player] === Mouse && PlayerStatus[player] === PieceFalling)
             {
                 boxScreenX = PlayersPlayfieldScreenX[player]-59;
                 boxScreenY = PlayersPlayfieldScreenY[player]-212;
@@ -1539,7 +1539,7 @@ var x;
                         for (var boxIndex = 1; boxIndex < 17; boxIndex++)
                         {
                             if ( PieceData [ Piece[player] ] [ PieceRotation[player] ] [boxIndex] === 1
-                            && MouseMovePlayfieldX+offsetX == x && MouseMovePlayfieldY+offsetY == y )
+                            && MouseMovePlayfieldX+offsetX === x && MouseMovePlayfieldY+offsetY === y )
                                 if (MouseMovePlayfieldY >= PiecePlayfieldY[player])
                                     DrawSpriteOntoCanvas(61, boxScreenX, boxScreenY, 1, 1, 0, .5, 255, 255, 255);
                     
@@ -1558,14 +1558,14 @@ var x;
                     boxScreenY+=18;
                 }
             
-                if ( (MouseMovePlayfieldY < PiecePlayfieldY[player]) || (PiecePlayfieldX[player] == MouseMovePlayfieldX && PiecePlayfieldY[player] == MouseMovePlayfieldY) )
+                if ( (MouseMovePlayfieldY < PiecePlayfieldY[player]) || (PiecePlayfieldX[player] === MouseMovePlayfieldX && PiecePlayfieldY[player] === MouseMovePlayfieldY) )
                     DrawTextOntoCanvas(12, "Rotate", PieceMouseScreenX+13, PieceMouseScreenY-18, "center", 255, 255, 255, 0, 0, 0, 0);
                 else
                     DrawTextOntoCanvas(12, "Move", PieceMouseScreenX+13, PieceMouseScreenY-18, "center", 255, 255, 255, 0, 0, 0, 0);
             }
         }
 
-        if (GameMode == CrisisMode && Level[2] > 6)
+        if (GameMode === CrisisMode && Level[2] > 6)
         {
             for (player = 0; player < NumberOfPlayers; player++)
             {
@@ -1633,7 +1633,7 @@ var x;
             {
                 DrawSpriteOntoCanvas(49 , PlayersPlayfieldScreenX[player], PlayersPlayfieldScreenY[player], 1, 1, 0, .75, 255, 255, 255);
 
-                if (PlayersCanJoin == true)
+                if (PlayersCanJoin === true)
                 {
                     if (numberOfGamepads > 0)
                     {
@@ -1663,7 +1663,7 @@ var x;
                         if (  MouseY > ( (PlayersPlayfieldScreenY[player])-230 ) && MouseY < ( (PlayersPlayfieldScreenY[player])+230 )
                         && MouseX > ( (PlayersPlayfieldScreenX[player])-80 ) && MouseX < ( (PlayersPlayfieldScreenX[player])+80 )  )
                         {
-                            if (MouseButtonClicked == true && MousePlaying === false)
+                            if (MouseButtonClicked === true && MousePlaying === false)
                             {
                                 PlayerInput[player] = Mouse;
                                 PlayerStatus[player] = NewPieceDropping;
@@ -1678,12 +1678,12 @@ var x;
         }
             
         var humanStillPlaying = false;
-        if (PlayerInput[0] !== CPU && PlayerStatus[0] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[1] !== CPU && PlayerStatus[1] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[2] !== CPU && PlayerStatus[2] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[3] !== CPU && PlayerStatus[3] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[4] !== CPU && PlayerStatus[4] != GameOver)  humanStillPlaying = true;
-        if (humanStillPlaying == false && CPUPlayerEnabled > 0)
+        if (PlayerInput[0] !== CPU && PlayerStatus[0] !== GameOver)  humanStillPlaying = true;
+        if (PlayerInput[1] !== CPU && PlayerStatus[1] !== GameOver)  humanStillPlaying = true;
+        if (PlayerInput[2] !== CPU && PlayerStatus[2] !== GameOver)  humanStillPlaying = true;
+        if (PlayerInput[3] !== CPU && PlayerStatus[3] !== GameOver)  humanStillPlaying = true;
+        if (PlayerInput[4] !== CPU && PlayerStatus[4] !== GameOver)  humanStillPlaying = true;
+        if (humanStillPlaying === false && CPUPlayerEnabled > 0)
         {
             DrawTextOntoCanvas(25, "Continue Watching Or Press [Esc] Key On Keyboard To Exit!", PlayersPlayfieldScreenX[2], 290, "center", 200, 200, 200, 0, 0, 0, 0);
             DrawTextOntoCanvas(25, "Continue Watching Or Press [Esc] Key On Keyboard To Exit!", PlayersPlayfieldScreenX[2], 296, "center", 150, 150, 150, 0, 0, 0, 0);
@@ -1742,7 +1742,7 @@ var x;
         
         CheckForNewHighScores();
         
-        if (CrisisWon == true)  { PlayMusic(5); NextScreenToDisplay = 7; }
+        if (CrisisWon === true)  { PlayMusic(5); NextScreenToDisplay = 7; }
         else if (NewHighScoreRank < 10)  NextScreenToDisplay = 10;
         else  NextScreenToDisplay = 6;        
     }
@@ -1941,12 +1941,12 @@ var player;
        
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
     {
-        if (PlayerStatus[0] != GameOver)
+        if (PlayerStatus[0] !== GameOver)
         {
-            if (Level[0] == 5 || Level[0] == 10 || Level[0] == 15 || Level[0] == 20 || Level[0] == 25 || Level[0] == 30)
+            if (Level[0] === 5 || Level[0] === 10 || Level[0] === 15 || Level[0] === 20 || Level[0] === 25 || Level[0] === 30)
                 NextScreenToDisplay = 11;
             
-            if (Level[0] == 30)
+            if (Level[0] === 30)
             {
                 PlayerStatus[0] = GameOver;
                 PlayerStatus[4] = GameOver;
@@ -2045,7 +2045,7 @@ var index;
             NewHighScoreCharButtonGreenHue[index] = 255;
         }
 
-        if (GameMode == FirefoxStoryMode)  HighScoreNameInputDevice = HighScoreUseKeyboardAndMouse;
+        if (GameMode === FirefoxStoryMode)  HighScoreNameInputDevice = HighScoreUseKeyboardAndMouse;
         else
         {
             if (PlayerInput[PlayerWithHighestScore] === Keyboard)  HighScoreNameInputDevice = HighScoreUseKeyboard;
@@ -2186,7 +2186,7 @@ var index;
         }
     }
 
-    if (HighScoreNameInputDevice == HighScoreUseKeyboard || HighScoreNameInputDevice == HighScoreUseKeyboardAndMouse)
+    if (HighScoreNameInputDevice === HighScoreUseKeyboard || HighScoreNameInputDevice === HighScoreUseKeyboardAndMouse)
     {
         if (KeyboardCharacterPressed !== "")
         {
@@ -2225,11 +2225,11 @@ var index;
 
         DrawTextOntoCanvas(20, "You achieved a new high score!", 400, 60, "center", 255, 255, 255, 0, 0, 0, 1);
         
-        if (HighScoreNameInputDevice == HighScoreUseKeyboardAndMouse)
+        if (HighScoreNameInputDevice === HighScoreUseKeyboardAndMouse)
             DrawTextOntoCanvas(20, "Please enter your name using the mouse or keyboard:", 400, 85, "center", 255, 255, 255, 0, 0, 0, 1);
-        else if (HighScoreNameInputDevice == HighScoreUseKeyboard)
+        else if (HighScoreNameInputDevice === HighScoreUseKeyboard)
             DrawTextOntoCanvas(20, "Please enter your name using the keyboard:", 400, 85, "center", 255, 255, 255, 0, 0, 0, 1);
-        else if (HighScoreNameInputDevice == HighScoreUseMouse)
+        else if (HighScoreNameInputDevice === HighScoreUseMouse)
             DrawTextOntoCanvas(20, "Please enter your name using the mouse:", 400, 85, "center", 255, 255, 255, 0, 0, 0, 1);
         else
             DrawTextOntoCanvas(20, "Please enter your name using the gamepad:", 400, 85, "center", 255, 255, 255, 0, 0, 0, 1);
@@ -2336,7 +2336,7 @@ function DisplayStoryVideo()
         });
     }
 
-    if (JoystickButtonOne[Any] == true || MouseButtonClicked === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/")
+    if (JoystickButtonOne[Any] === true || MouseButtonClicked === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/")
     {
         video.pause();
         NextScreenToDisplay = 9;
@@ -2351,13 +2351,13 @@ function DisplayStoryVideo()
 
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
     {
-        if (Level[0] == 31)
+        if (Level[0] === 31)
         {
             PlayMusic(0);
 
             CheckForNewHighScores();
 
-            if (CrisisWon == true)
+            if (CrisisWon === true)
             {
                 PlayMusic(7);
 
@@ -2378,12 +2378,6 @@ function DisplayStoryVideo()
 //--------------------------------------------------------------------------------------------------------------
 function DisplayAITestScreen()
 {
-var player;
-var boxScreenX;
-var boxScreenY;
-var y;
-var x;
-
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
         if (GameMode === CrisisMode)  PlayMusic(2);
@@ -2706,9 +2700,9 @@ var x;
     }
 */
 
-    for (var player = 0; player < NumberOfPlayers; player++)
+    for (var playerTemp = 0; playerTemp < NumberOfPlayers; playerTemp++)
     {
-        if (PlayerStatus[player] === GameOver)  AITestSetupComputerPlayer(player);
+        if (PlayerStatus[playerTemp] === GameOver)  AITestSetupComputerPlayer(playerTemp);
     }
 
 	var totalLines = (TotalOneLines+TotalTwoLines+TotalThreeLines+TotalFourLines)
@@ -2726,11 +2720,11 @@ var x;
         ThinkRussianTimer = 0;
         
         PlayMusic(0);
-        
-        CheckForNewHighScores();
-        
-        if (CrisisWon == true)  { PlayMusic(5); NextScreenToDisplay = 7; }
+
+        if (CrisisWon === true)  { PlayMusic(5); NextScreenToDisplay = 7; }
         else if (NewHighScoreRank < 10)  NextScreenToDisplay = 10;
-        else  NextScreenToDisplay = 6;        
+        else  NextScreenToDisplay = 6;
+
+        CheckForNewHighScores();
     }
 }

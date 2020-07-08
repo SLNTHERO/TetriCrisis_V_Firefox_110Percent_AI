@@ -457,7 +457,7 @@ function ThisButtonWasPressed(index)
 
 	var returnValue = false;
 
-	if ( (JoystickButtonOne[Any] === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/") && ScreenToDisplay != 10)
+	if ( (JoystickButtonOne[Any] === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/") && ScreenToDisplay !== 10)
 	{
 	    ButtonThatWasSelected = ButtonSelectedByKeyboard;
 	    ButtonSelectedAnimationTimer = 10;
@@ -527,34 +527,34 @@ function MouseOnGUI()
 {
     for (var index = 0; index < NumberOfOnscreenArrowSets; index++)
     {
-	var x = GUIArrowSetScreenX[index];
-	var y = GUIArrowSetScreenY[index];
+        var x = GUIArrowSetScreenX[index];
+        var y = GUIArrowSetScreenY[index];
 
-	var arrowOneCenterX = (x - 375);
-	var arrowOneCenterY = (y-23);
-	var arrowTwoCenterX = (x + 375);
-	var arrowTwoCenterY = (y-23);
+        var arrowOneCenterX = (x - 375);
+        var arrowOneCenterY = (y-23);
+        var arrowTwoCenterX = (x + 375);
+        var arrowTwoCenterY = (y-23);
 
-	if ( MouseX > (arrowOneCenterX - (46/2)) && MouseX < (arrowOneCenterX + (46/2))
-	&& MouseY > (arrowOneCenterY - (38/2)) && MouseY < (arrowOneCenterY + (38/2)) )
-	{
-	    return(true);
-	}
-	else if ( MouseX > (arrowTwoCenterX - (46/2)) && MouseX < (arrowTwoCenterX + (46/2))
-	&& MouseY > (arrowTwoCenterY - (38/2)) && MouseY < (arrowTwoCenterY + (38/2)) )
-	{
-	    return(true);
-	}
+        if ( MouseX > (arrowOneCenterX - (46/2)) && MouseX < (arrowOneCenterX + (46/2))
+        && MouseY > (arrowOneCenterY - (38/2)) && MouseY < (arrowOneCenterY + (38/2)) )
+        {
+            return true;
+        }
+        else if ( MouseX > (arrowTwoCenterX - (46/2)) && MouseX < (arrowTwoCenterX + (46/2))
+        && MouseY > (arrowTwoCenterY - (38/2)) && MouseY < (arrowTwoCenterY + (38/2)) )
+        {
+            return true;
+        }
     }
 
     for (var indexTwo = 0; indexTwo < NumberOfOnscreenButtons; indexTwo++)
     {
-	if ( MouseX > (GUIButtonScreenX[indexTwo] - 125) && MouseX < (GUIButtonScreenX[indexTwo] + 125)
-	&& MouseY > (GUIButtonScreenY[indexTwo] - 20) &&  MouseY < (GUIButtonScreenY[indexTwo] + 20) )
-	{
-	    return(true);
-	}
+        if ( MouseX > (GUIButtonScreenX[indexTwo] - 125) && MouseX < (GUIButtonScreenX[indexTwo] + 125)
+        && MouseY > (GUIButtonScreenY[indexTwo] - 20) &&  MouseY < (GUIButtonScreenY[indexTwo] + 20) )
+        {
+            return true;
+        }
     }
 	
-    return(false);
+    return false;
 }
