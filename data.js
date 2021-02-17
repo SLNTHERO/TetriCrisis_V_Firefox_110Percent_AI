@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "data.js"...
@@ -63,11 +62,11 @@ let NewHighScoreCharY;
 //--------------------------------------------------------------------------------------------------------------
 function CreateCookie(name,value,days)
 {
-    var expires;
+    let expires;
 
     if (days)
     {
-        var date = new Date();
+        let date = new Date();
         date.setTime(date.getTime()+(days*24*60*60*1000));
         expires = "; expires="+date.toUTCString();
     }
@@ -79,11 +78,11 @@ function CreateCookie(name,value,days)
 //--------------------------------------------------------------------------------------------------------------
 function ReadCookie(name)
 {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++)
+    let nameEQ = name + "=";
+    let ca = document.cookie.split(';');
+    for(let i=0;i < ca.length;i++)
     {
-	var c = ca[i];
+	let c = ca[i];
 	while (c.charAt(0)===' ') c = c.substring(1,c.length);
 	if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
     }
@@ -105,9 +104,9 @@ function CheckHTML5LocalStorage()
 //--------------------------------------------------------------------------------------------------------------
 function LoadOptions()
 {
-var temp = null;
-var tempTwo = null;
-var tempThree = null;
+let temp = null;
+let tempTwo = null;
+let tempThree = null;
 
     if ( CheckHTML5LocalStorage() === false )  HTML5LocalStorageSupported = false;
 
@@ -136,9 +135,9 @@ var tempThree = null;
         temp = ReadCookie('TC5-Beta1-KeyboardSpaceBarFunction');
         if (temp)  KeyboardSpaceBarFunction = parseInt(temp);
 
-        for (var gameModeTwo = 0; gameModeTwo < 7; gameModeTwo++)
+        for (let gameModeTwo = 0; gameModeTwo < 7; gameModeTwo++)
         {
-            for (var rankTwo = 0; rankTwo < 10; rankTwo++)
+            for (let rankTwo = 0; rankTwo < 10; rankTwo++)
             {
             temp = ReadCookie('TC5-Beta1-HighScoresName'+gameModeTwo+''+rankTwo+'');
             if (temp)  HighScoresName[gameModeTwo][rankTwo] = temp;
@@ -197,9 +196,9 @@ var tempThree = null;
         temp = localStorage.getItem('TC5-Beta1-KeyboardSpaceBarFunction');
         if (temp)  KeyboardSpaceBarFunction = parseInt(temp);
 
-            for (var gameMode = 0; gameMode < 7; gameMode++)
+            for (let gameMode = 0; gameMode < 7; gameMode++)
         {
-            for (var rank = 0; rank < 10; rank++)
+            for (let rank = 0; rank < 10; rank++)
             {
             temp = localStorage.getItem('TC5-Beta1-HighScoresName'+gameMode+''+rank+'');
             if (temp)  HighScoresName[gameMode][rank] = temp;
@@ -254,9 +253,9 @@ function SaveOptions()
 
         CreateCookie('TC5-Beta1-KeyboardSpaceBarFunction', KeyboardSpaceBarFunction, 9999);
 
-        for (var gameMode = 0; gameMode < 7; gameMode++)
+        for (let gameMode = 0; gameMode < 7; gameMode++)
         {
-            for (var rank = 0; rank < 10; rank++)
+            for (let rank = 0; rank < 10; rank++)
             {
             CreateCookie('TC5-Beta1-HighScoresName'+gameMode+''+rank+'', HighScoresName[gameMode][rank], 9999);
 
@@ -296,9 +295,9 @@ function SaveOptions()
 
         localStorage.setItem('TC5-Beta1-KeyboardSpaceBarFunction', KeyboardSpaceBarFunction);
         
-        for (var gameModeTwo = 0; gameModeTwo < 7; gameModeTwo++)
+        for (let gameModeTwo = 0; gameModeTwo < 7; gameModeTwo++)
 	    {
-            for (var rankTwo = 0; rankTwo < 10; rankTwo++)
+            for (let rankTwo = 0; rankTwo < 10; rankTwo++)
             {
                 localStorage.setItem('TC5-Beta1-HighScoresName'+gameModeTwo+''+rankTwo+'', HighScoresName[gameModeTwo][rankTwo]);
 
@@ -327,9 +326,9 @@ function SaveOptions()
 //--------------------------------------------------------------------------------------------------------------
 function InitializeHighScores()
 {
-    for (var gameMode = 0; gameMode < 7; gameMode++)
+    for (let gameMode = 0; gameMode < 7; gameMode++)
     {
-	HighScoresName[gameMode][0] = "JeZ+Lee";
+	HighScoresName[gameMode][0] = "JeZxLee";
 	HighScoresName[gameMode][1] = "Doatheman";
 	HighScoresName[gameMode][2] = "mattmatteh";
 	HighScoresName[gameMode][3] = "You!";
@@ -351,36 +350,36 @@ function InitializeHighScores()
 	HighScoresLevel[gameMode][8] = 2;
 	HighScoresLevel[gameMode][9] = 1;
 
-	HighScoresScore[gameMode][0] = 10000;
-	HighScoresScore[gameMode][1] = 9000;
-	HighScoresScore[gameMode][2] = 8000;
-	HighScoresScore[gameMode][3] = 7000;
-	HighScoresScore[gameMode][4] = 6000;
-	HighScoresScore[gameMode][5] = 5000;
-	HighScoresScore[gameMode][6] = 4000;
-	HighScoresScore[gameMode][7] = 3000;
-	HighScoresScore[gameMode][8] = 2000;
-	HighScoresScore[gameMode][9] = 1000;
+	HighScoresScore[gameMode][0] = 5000;
+	HighScoresScore[gameMode][1] = 4500;
+	HighScoresScore[gameMode][2] = 4000;
+	HighScoresScore[gameMode][3] = 3500;
+	HighScoresScore[gameMode][4] = 3000;
+	HighScoresScore[gameMode][5] = 2500;
+	HighScoresScore[gameMode][6] = 2000;
+	HighScoresScore[gameMode][7] = 1500;
+	HighScoresScore[gameMode][8] = 1000;
+	HighScoresScore[gameMode][9] = 500;
     }
     
-    HighScoresLevel[6][0] = "31";
-    HighScoresLevel[6][1] = "31";
-    HighScoresLevel[6][2] = "30";
-    HighScoresLevel[6][3] = "25";
-    HighScoresLevel[6][4] = "25";
-    HighScoresLevel[6][5] = "20";
-    HighScoresLevel[6][6] = "15";
-    HighScoresLevel[6][7] = "10";
-    HighScoresLevel[6][8] = "5";
-    HighScoresLevel[6][9] = "1";
+    HighScoresLevel[6][0] = 31;
+    HighScoresLevel[6][1] = 31;
+    HighScoresLevel[6][2] = 30;
+    HighScoresLevel[6][3] = 25;
+    HighScoresLevel[6][4] = 25;
+    HighScoresLevel[6][5] = 20;
+    HighScoresLevel[6][6] = 15;
+    HighScoresLevel[6][7] = 10;
+    HighScoresLevel[6][8] = 5;
+    HighScoresLevel[6][9] = 1;
 }
 
 //--------------------------------------------------------------------------------------------------------------
 function CheckForNewHighScores()
 {
-var human = new Array(5);
+let human = new Array(5);
     
-    for (var index = 0; index < 5; index++)
+    for (let index = 0; index < 5; index++)
     {
         human[index] = PlayerInput[index] !== CPU;
     }
@@ -391,21 +390,21 @@ var human = new Array(5);
     else
     {
         PlayerWithHighestScore = 0;
-        for (var indexTwo = 0; indexTwo < 5; indexTwo++)
+        for (let indexTwo = 0; indexTwo < 5; indexTwo++)
         {
             if (human[indexTwo] === true && Score[indexTwo] >= Score[PlayerWithHighestScore])  PlayerWithHighestScore = indexTwo;
         }
         
     }
 
-    for (var rankTwo = 9; rankTwo > -1; rankTwo--)
+    for (let rankTwo = 9; rankTwo > -1; rankTwo--)
     {
 	    if ( Score[PlayerWithHighestScore] >= parseInt(HighScoresScore[GameMode][rankTwo]) )  NewHighScoreRank = rankTwo;
     }
 
     if (NewHighScoreRank < 999)
     {
-        for (var rankThree = 8; rankThree > NewHighScoreRank-1; rankThree--)
+        for (let rankThree = 8; rankThree > NewHighScoreRank-1; rankThree--)
         {
                 HighScoresName[GameMode][rankThree+1] = HighScoresName[GameMode][rankThree];
                 HighScoresLevel[GameMode][rankThree+1] = HighScoresLevel[GameMode][rankThree];

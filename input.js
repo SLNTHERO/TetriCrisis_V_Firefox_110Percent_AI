@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "input.js"...
@@ -51,32 +50,9 @@ let GamepadConfigGetInput = 0;
 
 let GamepadAxisZero = 0;
 let GamepadAxisOne = 1;
-//let GamepadAxisTwo = 2;
-//let GamepadAxisThree = 3;
-//let GamepadAxisFour = 4;
-//let GamepadAxisFive = 5;
 
 let GamepadButtonZero = 10;
 let GamepadButtonOne = 11;
-//let GamepadButtonTwo= 12;
-//let GamepadButtonThree = 13;
-//let GamepadButtonFour = 14;
-//let GamepadButtonFive = 15;
-//let GamepadButtonSix = 16;
-//let GamepadButtonSeven = 17;
-//let GamepadButtonEight = 18;
-//let GamepadButtonNine = 19;
-//let GamepadButtonTen = 20;
-//let GamepadButtonEleven = 21;
-//let GamepadButtonTwelve = 22;
-//let GamepadButtonThirteen = 23;
-//let GamepadButtonFourteen = 24;
-//let GamepadButtonFifteen = 25;
-//let GamepadButtonSixteen = 26;
-//let GamepadButtonSeventeen = 27;
-//let GamepadButtonEighteen = 28;
-//let GamepadButtonNineteen = 29;
-//let GamepadButtonTwenty = 30;
 
 let GamepadUP;
 let GamepadRIGHT;
@@ -165,10 +141,10 @@ function CheckForKeyRelease(evt)
 //--------------------------------------------------------------------------------------------------------------
 function CheckForGamepadInput()
 {
-var axis = new Array(6);
-var button = new Array(21);
-var axisIndex;
-var buttonIndex;
+let axis = new Array(6);
+let button = new Array(21);
+let axisIndex;
+let buttonIndex;
 
     if (GamepadConfigPadIndex !== -1)  return;
 
@@ -264,8 +240,8 @@ var buttonIndex;
 //--------------------------------------------------------------------------------------------------------------
 function QueryGamepadsForInput()
 {
-var axisIndex;
-var buttonIndex;
+let axisIndex;
+let buttonIndex;
 
     if (DelayAllUserInput > 0)  return(-1);
 

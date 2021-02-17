@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "visuals.js'...
@@ -47,11 +46,11 @@ let TextCacheIndex = 0;
 //--------------------------------------------------------------------------------------------------------------
 function BrowserResize()
 {
-var widthToHeight = 800 / 480;
-var browserWidthTemp;
-var browserHeightTemp;
+let widthToHeight = 800 / 480;
+let browserWidthTemp;
+let browserHeightTemp;
 
-    var canvas = document.getElementById('ScreenCanvas');
+    let canvas = document.getElementById('ScreenCanvas');
 
     if ( Browser === "Google Android" || Browser === "Apple iOS" || Browser === "Mobile Unknown" )
     {
@@ -66,7 +65,7 @@ var browserHeightTemp;
         BrowserWidth = window.innerWidth;
         BrowserHeight = window.innerHeight;
         
-        var newWidthToHeight = BrowserWidth / BrowserHeight;
+        let newWidthToHeight = BrowserWidth / BrowserHeight;
         browserWidthTemp = BrowserWidth;
         browserHeightTemp = BrowserHeight;
     
@@ -94,7 +93,7 @@ var browserHeightTemp;
 //--------------------------------------------------------------------------------------------------------------
 function LoadImages()
 {
-var index;
+let index;
 
     for (index = 0; index < 100; index++)
     {
@@ -176,7 +175,7 @@ var index;
 //--------------------------------------------------------------------------------------------------------------
 function PreloadStaffText(size, text, x, y, justification, colorR, colorG, colorB, outlineColorR, outlineColorG, outlineColorB, outlineBold)
 {
-var ctxPreloadedStaffTexts = new Array(100);
+let ctxPreloadedStaffTexts = new Array(100);
 
     NumberOfPreloadedStaffTexts++;
 
@@ -205,8 +204,8 @@ var ctxPreloadedStaffTexts = new Array(100);
     }
     else if (outlineBold === 1)
     {
-        for (var yOffset = -2; yOffset < 3; yOffset++)
-            for (var xOffset = -2; xOffset < 3; xOffset++)
+        for (let yOffset = -2; yOffset < 3; yOffset++)
+            for (let xOffset = -2; xOffset < 3; xOffset++)
                 ctxPreloadedStaffTexts[NumberOfPreloadedStaffTexts].fillText(text, x+xOffset, y+yOffset);
     }
 
@@ -223,8 +222,7 @@ function PreloadAllStaffTexts()
 {
     PreloadStaffText(20, "TM", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
     PreloadStaffText(20, "TetriCrisis V ''Firefox'' 110% A.I.", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
-    PreloadStaffText(20, "\u00A92017, By Team ''www.16BitSoft.com''", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-    PreloadStaffText(20, "www.16BitSoft.com", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
+    PreloadStaffText(20, "\u00A92021, By Team 16BitSoft", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
 
     PreloadStaffText(20, "Original Tetris Game Concept By:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
     PreloadStaffText(20, "Alexey Pajitnov", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
@@ -234,7 +232,7 @@ function PreloadAllStaffTexts()
     PreloadStaffText(20, "\u00A91982 By Warner Bros. Inc.", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
 
     PreloadStaffText(20, "Special Thank You To:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
-    PreloadStaffText(20, "www.NewGrounds.com", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
+    PreloadStaffText(20, "www.Itch.io", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "(For Internet Publishing)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
 
     PreloadStaffText(20, "HTML5/JS Video Playback Core By:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
@@ -292,30 +290,16 @@ function PreloadAllStaffTexts()
     
     PreloadStaffText(20, "''You!''", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
 
-    PreloadStaffText(20, "Game Built On A:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
-    PreloadStaffText(20, "''JeZ+Lee'' Pro-Built Desktop Computer: ''JetFire''", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-    PreloadStaffText(20, "(Running Genuine Linux Mint 18.2 KDE 64Bit Linux)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-
-    PreloadStaffText(20, "Game Optimized On A:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
-    PreloadStaffText(20, "Hyper-Custom Thin Client Desktop Computer", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-    PreloadStaffText(20, "(Running Genuine Linux Mint 18.2 KDE 64Bit Linux)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-
-    PreloadStaffText(20, "Game Tested On A:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
-    PreloadStaffText(20, "''JeZ+Lee'' Pro-Built Desktop Computer: ''Optimus Prime''", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-    PreloadStaffText(20, "(Running Genuine Microsoft\u00AE Windows\u00AE 10 Pro 64Bit)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-
     PreloadStaffText(20, "Software Credits:", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
     PreloadStaffText(20, "WebStorm (Cross-Platform JavaScript I.D.E.)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-    PreloadStaffText(20, "NeoPaint 5 (Windows Graphic Editor)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
+    PreloadStaffText(20, "PixelNeo (Windows Graphic Editor)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "GoldWave (Windows Audio Editor)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "Kdenlive (Linux Video Editor)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "Freemake (Windows Video Converter)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "SketchUp Make 2015 (Windows 3D Modeler)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "FileZilla (Cross-Platform F.T.P. Client)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-
-    PreloadStaffText(20, "www.YOUTUBE-MP3.org", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
+    PreloadStaffText(20, "www.YouTube-To-MP3.org", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "TTF Patch (Windows TTF Font Patcher)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
-    PreloadStaffText(20, "VMWare\u00AE Workstation 12 Player (Cross-Platform Virtual Machine)", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "Microsoft\u00AE Edge", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "Microsoft\u00AE Internet Explorer", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "Mozilla\u00AE Firefox", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
@@ -323,7 +307,7 @@ function PreloadAllStaffTexts()
     PreloadStaffText(20, "Opera Software\u00AE Opera", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
     PreloadStaffText(20, "Apple\u00AE Safari", 400, 75, "center", 255, 255, 255, 0, 0, 0, 1);
 
-    PreloadStaffText(20, "''A 110% By Team www.16BitSoft.com!''", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
+    PreloadStaffText(20, "''A 110% By Team 16BitSoft!''", 400, 75, "center", 255, 255, 0, 0, 0, 0, 1);
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -333,8 +317,8 @@ function DrawPreloadedStaffTextOntoCanvas(index, x, y)
 
     ctx.globalAlpha = PreloadStaffTextsAlpha[index];
 
-    var computedCenterX = Math.floor(PreloadedStaffTexts[index].width / 2);
-    var computedCenterY = Math.floor(PreloadedStaffTexts[index].height / 2);
+    let computedCenterX = Math.floor(PreloadedStaffTexts[index].width / 2);
+    let computedCenterY = Math.floor(PreloadedStaffTexts[index].height / 2);
 
 	ctx.drawImage(  PreloadedStaffTexts[index], (x - computedCenterX), (y - computedCenterY)
 	, PreloadedStaffTexts[index].width, PreloadedStaffTexts[index].height  );
@@ -354,9 +338,9 @@ function DrawSpriteOntoCanvas(index, x, y, scaleX, scaleY, rotationDegree, alpha
 {
     if (scaleX === 0 || scaleY === 0)  return;
     
-    var imageToDraw;
-    var imageToDrawWidth;
-    var imageToDrawHeight;
+    let imageToDraw;
+    let imageToDrawWidth;
+    let imageToDrawHeight;
     
     if (index < 101 || index > 166)
     {
@@ -380,13 +364,13 @@ function DrawSpriteOntoCanvas(index, x, y, scaleX, scaleY, rotationDegree, alpha
 
     if (red !== 255 || green !== 255 || blue !== 255)
     {
-        var buff = document.createElement("canvas");
+        let buff = document.createElement("canvas");
         buff.width  = imageToDrawWidth;
         buff.height = imageToDrawHeight;
 
         if (red !== 255)
         {
-            var ctxR  = buff.getContext("2d");
+            let ctxR  = buff.getContext("2d");
             ctxR.drawImage(imageToDraw, 0, 0);
 
             ctxR.globalAlpha = (red / 255);
@@ -400,7 +384,7 @@ function DrawSpriteOntoCanvas(index, x, y, scaleX, scaleY, rotationDegree, alpha
 
         if (green !== 255)
         {
-            var ctxG  = buff.getContext("2d");
+            let ctxG  = buff.getContext("2d");
             ctxG.drawImage(imageToDraw, 0, 0);
 
             ctxG.globalAlpha = (green / 255);
@@ -414,7 +398,7 @@ function DrawSpriteOntoCanvas(index, x, y, scaleX, scaleY, rotationDegree, alpha
 
         if (blue !== 255)
         {
-            var ctxB  = buff.getContext("2d");
+            let ctxB  = buff.getContext("2d");
             ctxB.drawImage(imageToDraw, 0, 0);
 
             ctxB.globalAlpha = (blue / 255);
@@ -445,7 +429,7 @@ function DrawSpriteOntoCanvas(index, x, y, scaleX, scaleY, rotationDegree, alpha
 //--------------------------------------------------------------------------------------------------------------
 function ClearTextCache()
 {
-    for (var index = 0; index < 100; index++)
+    for (let index = 0; index < 100; index++)
     {
         TextCacheImageCanvasCTX[index].clearRect(0, 0, 800, 150);
         TextCacheText[index] = " ";
@@ -460,14 +444,14 @@ function ClearTextCache()
 //--------------------------------------------------------------------------------------------------------------
 function DrawTextOntoCanvas(size, text, x, y, justification, colorR, colorG, colorB, outlineColorR, outlineColorG, outlineColorB, outlineBold)
 {
-var computedCenterX;
-var computedCenterY;
+let computedCenterX;
+let computedCenterY;
 
-    for (var indexToCheck = 0; indexToCheck < 100; indexToCheck++)
+    for (let indexToCheck = 0; indexToCheck < 100; indexToCheck++)
     {
         if (  text === TextCacheText[indexToCheck]
         && y === TextCacheScreenY[indexToCheck] && x === TextCacheScreenXOriginal[indexToCheck] )
-	{
+	    {
             ctx.save();
 
             computedCenterX = Math.floor(TextCacheImageCanvas[indexToCheck].width / 2);
@@ -480,7 +464,7 @@ var computedCenterY;
             ctx.restore();
 
             return;
-	}
+	    }
     }
 
     if (TextCacheIndex < 99)  TextCacheIndex++;
@@ -513,8 +497,8 @@ var computedCenterY;
     }
     else if (outlineBold === 1)
     {
-        for (var yOffset = -2; yOffset < 3; yOffset++)
-            for (var xOffset = -2; xOffset < 3; xOffset++)
+        for (let yOffset = -2; yOffset < 3; yOffset++)
+            for (let xOffset = -2; xOffset < 3; xOffset++)
                 TextCacheImageCanvasCTX[TextCacheIndex].fillText(text, x+xOffset, y+yOffset);
     }
 

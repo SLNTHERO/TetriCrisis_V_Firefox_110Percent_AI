@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "logic.js"...
@@ -37,7 +36,7 @@ let GameMode = OriginalMode;
 
 let NewGameGarbageHeight = 0;
 
-let CPUPlayerEnabled = 1;
+let CPUPlayerEnabled = 2;
 
 let DisplayDropShadow = 1;
 let None          = 0;
@@ -233,9 +232,9 @@ let MousePlaying = false;
 //-------------------------------------------------------------------------------------------------
 function SetupTetrisCore()
 {
-	for (var piece = 0; piece < 8; piece++)
-		for (var rotation = 0; rotation < 5; rotation++)
-			for (var box = 0; box < 17; box++)
+	for (let piece = 0; piece < 8; piece++)
+		for (let rotation = 0; rotation < 5; rotation++)
+			for (let box = 0; box < 17; box++)
 				PieceData [piece] [rotation] [box] = 0;
 
 	//RED "S Piece"...
@@ -407,10 +406,10 @@ function SetupTetrisCore()
 //-------------------------------------------------------------------------------------------------
 function ClearPlayfieldsWithCollisionDetection()
 {
-var x;
-var y;
+let x;
+let y;
 
-	for (var player = 0; player < NumberOfPlayers; player++)
+	for (let player = 0; player < NumberOfPlayers; player++)
 	{
 		for (y = 0; y < 26; y++)
 			for (x = 0; x < 15; x++)
@@ -431,14 +430,14 @@ function GetRandomPiece()
 {
 	console.log(Player);
 	
-	var random = PieceHistory[Player][0];
+	let random = PieceHistory[Player][0];
 
-	for (var index = 0; index < 3; index++)
+	for (let index = 0; index < 3; index++)
 	{
 		PieceHistory[Player][index] = PieceHistory[Player][index+1];
 	}
 
-	var numberOfTries = 0;
+	let numberOfTries = 0;
 	while ( (PieceHistory[Player][3] === PieceHistory[Player][0]
 	      || PieceHistory[Player][3] === PieceHistory[Player][1]
 	      || PieceHistory[Player][3] === PieceHistory[Player][2])
@@ -454,9 +453,9 @@ function GetRandomPiece()
 //-------------------------------------------------------------------------------------------------
 function PieceCollision()
 {
-var x, y;
-var box = 1;
-var returnValue = CollisionNotTrue;
+let x, y;
+let box = 1;
+let returnValue = CollisionNotTrue;
 
     for (y = 0; y < 4; y++)
         for (x = 0; x < 4; x++)
@@ -474,9 +473,9 @@ var returnValue = CollisionNotTrue;
 //-------------------------------------------------------------------------------------------------
 function PieceCollisionDown()
 {
-var x, y;
-var box = 1;
-var returnValue = CollisionNotTrue;
+let x, y;
+let box = 1;
+let returnValue = CollisionNotTrue;
 
     for (y = 1; y < 5; y++)
         for (x = 0; x < 4; x++)
@@ -499,12 +498,12 @@ function AddPieceToPlayfieldMemory(TempOrCurrentOrNextOrDropShadow)
 
         if (PlayerInput[Player] === Mouse && TempOrCurrentOrNextOrDropShadow === DropShadow)  return;
 
-	var TEMP_Piece = Piece[Player];
-	var TEMP_PieceRotation = PieceRotation[Player];
-	var TEMP_PiecePlayfieldX = PiecePlayfieldX[Player];
-	var TEMP_PiecePlayfieldY = PiecePlayfieldY[Player];
+	let TEMP_Piece = Piece[Player];
+	let TEMP_PieceRotation = PieceRotation[Player];
+	let TEMP_PiecePlayfieldX = PiecePlayfieldX[Player];
+	let TEMP_PiecePlayfieldY = PiecePlayfieldY[Player];
 
-	var value = Piece[Player]+10;
+	let value = Piece[Player]+10;
 
 	if (TempOrCurrentOrNextOrDropShadow === Next)
 	{
@@ -518,7 +517,7 @@ function AddPieceToPlayfieldMemory(TempOrCurrentOrNextOrDropShadow)
 	}
 	else if (TempOrCurrentOrNextOrDropShadow === DropShadow)
 	{
-		for (var y = PiecePlayfieldY[Player]; y < 23; y++)
+		for (let y = PiecePlayfieldY[Player]; y < 23; y++)
 		{
 			PiecePlayfieldY[Player] = y;
 			if (PieceCollision() !== CollisionNotTrue)
@@ -592,14 +591,14 @@ function DeletePieceFromPlayfieldMemory(CurrentOrDropShadow)
 	if (PlayerStatus[Player] === FlashingCompletedLines || PlayerStatus[Player] === ClearingCompletedLines)
 		return;
 
-	var TEMP_Piece = Piece[Player];
-	var TEMP_PieceRotation = PieceRotation[Player];
-	var TEMP_PiecePlayfieldX = PiecePlayfieldX[Player];
-	var TEMP_PiecePlayfieldY = PiecePlayfieldY[Player];
+	let TEMP_Piece = Piece[Player];
+	let TEMP_PieceRotation = PieceRotation[Player];
+	let TEMP_PiecePlayfieldX = PiecePlayfieldX[Player];
+	let TEMP_PiecePlayfieldY = PiecePlayfieldY[Player];
 
 	if (CurrentOrDropShadow === DropShadow)
 	{
-		for (var y = PiecePlayfieldY[Player]; y < 23; y++)
+		for (let y = PiecePlayfieldY[Player]; y < 23; y++)
 		{
 			PiecePlayfieldY[Player] = y;
 			if (PieceCollision() !== CollisionNotTrue)
@@ -688,9 +687,9 @@ function SetupNewPiece()
 
 	DropBonus[Player] = 0;
 
-	for (var x = 0; x < 12; x++)
+	for (let x = 0; x < 12; x++)
 	{
-		for (var rotation = 1; rotation < 5; rotation++)
+		for (let rotation = 1; rotation < 5; rotation++)
 		{
 		    MoveOneBlockCavernHoles[Player][x][rotation] = 0;
 
@@ -717,15 +716,15 @@ function SetupNewPiece()
 //-------------------------------------------------------------------------------------------------
 function CheckForCompletedLines()
 {
-var numberOfCompletedLines = 0;
+let numberOfCompletedLines = 0;
 
 	AddPieceToPlayfieldMemory(Current);
 
-	for (var y = 5; y < 24; y++)
+	for (let y = 5; y < 24; y++)
 	{
-		var boxTotal = 0;
+		let boxTotal = 0;
 
-		for (var x = 2; x < 12; x++)
+		for (let x = 2; x < 12; x++)
 		{
 			if ( (Playfield[Player][x][y] > 9)&&(Playfield[Player][x][y] < 20) )
 				boxTotal++;
@@ -1104,11 +1103,11 @@ function MovePieceRight()
 //-------------------------------------------------------------------------------------------------
 function SetupForNewGame()
 {
-var player;
-var indexTwo;
-var indexThree;
-var x;
-var y;
+let player;
+let indexTwo;
+let indexThree;
+let x;
+let y;
 
 	PsychoBackgroundRotationOne = 0;
 	PsychoBackgroundRotationTwo = 0;
@@ -1230,7 +1229,7 @@ var y;
 
 		for (x = 0; x < 12; x++)
 		{
-			for (var rotation = 1; rotation < 5; rotation++)
+			for (let rotation = 1; rotation < 5; rotation++)
 			{
 			    MoveOneBlockCavernHoles[Player][x][rotation] = 0;
 
@@ -1349,10 +1348,10 @@ var y;
 		{
 			for (y = 23; y > 23-NewGameGarbageHeight; y--)
 			{
-				var boxTotal = 0;
+				let boxTotal = 0;
 				for (x = 2; x < 12; x++)
 				{
-					var box = Math.floor( Math.random() * 8 );
+					let box = Math.floor( Math.random() * 8 );
 					if (box > 0)  boxTotal++;
 
 					if (boxTotal < 10)
@@ -1372,13 +1371,13 @@ var y;
 //-------------------------------------------------------------------------------------------------
 function SetupForNewGameAITest()
 {
-var player;
-var indexTwo;
-var indexThree;
-var x;
-var y;
+let player;
+let indexTwo;
+let indexThree;
+let x;
+let y;
 	
-	Framerate = 1000;
+	Framerate = 60;
 
 	GameMode = OriginalMode;
 
@@ -1504,7 +1503,7 @@ var y;
 
 		for (x = 0; x < 12; x++)
 		{
-			for (var rotation = 1; rotation < 5; rotation++)
+			for (let rotation = 1; rotation < 5; rotation++)
 			{
 			    MoveOneBlockCavernHoles[Player][x][rotation] = 0;
 
@@ -1623,10 +1622,10 @@ var y;
 		{
 			for (y = 23; y > 23-NewGameGarbageHeight; y--)
 			{
-				var boxTotal = 0;
+				let boxTotal = 0;
 				for (x = 2; x < 12; x++)
 				{
-					var box = Math.floor( Math.random() * 8 );
+					let box = Math.floor( Math.random() * 8 );
 					if (box > 0)  boxTotal++;
 
 					if (boxTotal < 10)
@@ -1657,7 +1656,7 @@ var y;
 	PlayerInput[4] = CPU;
 	PlayerStatus[4] = NewPieceDropping;
 	
-	CPUPlayerEnabled = 4;
+	CPUPlayerEnabled = 2;
 	
     TotalCPUPlayerLines = 0;
     NumberOfCPUGames = 5;
@@ -1670,8 +1669,8 @@ var y;
 //-------------------------------------------------------------------------------------------------
 function AITestSetupComputerPlayer(player)
 {
-var x;
-var y;
+let x;
+let y;
 
 	for (y = 0; y < 26; y++)
 		for (x = 0; x < 15; x++)
@@ -1707,12 +1706,12 @@ var y;
 //-------------------------------------------------------------------------------------------------
 function FlashCompletedLines()
 {
-var numberOfCompletedLines = 0;
-var y;
-var x;
-var boxTotal;
-var xTwo;
-var attackX;
+let numberOfCompletedLines = 0;
+let y;
+let x;
+let boxTotal;
+let xTwo;
+let attackX;
 
 	if (FlashCompletedLinesTimer[Player] < 21)  FlashCompletedLinesTimer[Player]++;
 
@@ -1761,7 +1760,7 @@ var attackX;
 					boxTotal++;
 				}
 
-                var requiredNumberOfLinesForAttack = 1;
+                let requiredNumberOfLinesForAttack = 1;
                 if (GameMode === FirefoxStoryMode)
                 {
                     if (Level[0] < 10)  requiredNumberOfLinesForAttack = 2;
@@ -1771,7 +1770,7 @@ var attackX;
 							
 				if (boxTotal === 10 && numberOfCompletedLines > requiredNumberOfLinesForAttack)
 				{
-					for (var attackY = 1; attackY < 12; attackY++)
+					for (let attackY = 1; attackY < 12; attackY++)
 						for (attackX = 0; attackX < 10; attackX++)
 							AttackLines[Player][attackX][attackY-1] = AttackLines[Player][attackX][attackY];
 
@@ -1812,7 +1811,7 @@ var attackX;
 					Playfield[Player][ PiecePlayfieldX[Player]+3 ][ PiecePlayfieldY[Player]+3 ] = 0;
 
 					attackX = 0;
-					for (var xThree = 2; xThree < 12; xThree++)
+					for (let xThree = 2; xThree < 12; xThree++)
 					{
 						AttackLines[Player][attackX][11] = Playfield[Player][xThree][y];
 						attackX++;
@@ -1830,14 +1829,14 @@ var attackX;
 //-------------------------------------------------------------------------------------------------
 function ClearCompletedLines()
 {
-var thereWasACompletedLine = false;
-var xTwo;
+let thereWasACompletedLine = false;
+let xTwo;
 
-	for (var y = 5; y < 24; y++)
+	for (let y = 5; y < 24; y++)
 	{
-		var boxTotal = 0;
+		let boxTotal = 0;
 
-		for (var x = 2; x < 12; x++)
+		for (let x = 2; x < 12; x++)
 		{
 			if ( (Playfield[Player][x][y] > 9)&&(Playfield[Player][x][y] < 20) )
 				boxTotal++;
@@ -1851,7 +1850,7 @@ var xTwo;
 
 			if (ClearCompletedLinesTimer[Player] % 10 === 0)
 			{
-				for (var yTwo = y; yTwo > 5; yTwo--)
+				for (let yTwo = y; yTwo > 5; yTwo--)
 					for (xTwo = 2; xTwo < 12; xTwo++)
 						Playfield[Player][xTwo][yTwo] = Playfield[Player][xTwo][yTwo-1];
 
@@ -1868,7 +1867,7 @@ var xTwo;
 				{
 					if (GameMode === CrisisMode)
 					{
-						var playersAlive = 0;
+						let playersAlive = 0;
 						if (PlayerStatus[0] !== GameOver)  playersAlive++;
 						if (PlayerStatus[1] !== GameOver)  playersAlive++;
 						if (PlayerStatus[2] !== GameOver)  playersAlive++;
@@ -1936,9 +1935,9 @@ var xTwo;
 //-------------------------------------------------------------------------------------------------
 function AddAnAttackLineToEnemiesPlayfield()
 {
-var TEMP_Player = Player;
-var x;
-var y;
+let TEMP_Player = Player;
+let x;
+let y;
 
 	for (Player = 0; Player < NumberOfPlayers; Player++)
 	{
@@ -1973,7 +1972,7 @@ var y;
 					for (x = 2; x < 12; x++)
 						Playfield[Player][x][23] = 0;
 
-					var attackX = 0;
+					let attackX = 0;
 					for (x = 2; x < 12; x++)
 					{
 						Playfield[Player][x][23] = AttackLines[TEMP_Player][attackX][11];
@@ -2000,8 +1999,8 @@ var y;
 //-------------------------------------------------------------------------------------------------
 function AddAnIncompleteLineToPlayfieldCrisisMode()
 {
-var x;
-var y;
+let x;
+let y;
 
 	if (PlayerStatus[Player] === FlashingCompletedLines || PlayerStatus[Player] === ClearingCompletedLines)
 	{
@@ -2033,10 +2032,10 @@ var y;
 	for (x = 2; x < 12; x++)
 		Playfield[Player][x][23] = 0;
 
-	var boxTotal = 0;
+	let boxTotal = 0;
 	for (x = 2; x < 12; x++)
 	{
-		var box = Math.floor( Math.random() * 8 );
+		let box = Math.floor( Math.random() * 8 );
 		if (box > 0)  boxTotal++;
 
 		if (boxTotal < 10)
@@ -2054,9 +2053,9 @@ var y;
 //-------------------------------------------------------------------------------------------------
 function CrisisModeClearPlayfield()
 {
-var returnValue = false;
-var y;
-var x;
+let returnValue = false;
+let y;
+let x;
 
 	for (y = 23; y > 5; y--)
 	{
@@ -2085,10 +2084,10 @@ var x;
 //-------------------------------------------------------------------------------------------------
 function RunTetriGameEngine()
 {
-var boxScreenX;
-var boxScreenY;
-var y;
-var x;
+let boxScreenX;
+let boxScreenY;
+let y;
+let x;
 
 	if (ThinkRussianTimer > 0)  ThinkRussianTimer--;
 	if (ThinkRussianTimer === 1)
@@ -2321,8 +2320,8 @@ var x;
 							}
 						}
 
-                        var numberOfPlayersAlive = 5;
-                        for (var player = 0; player < 5; player++)
+                        let numberOfPlayersAlive = 5;
+                        for (let player = 0; player < 5; player++)
                         {
                             if (PlayerStatus[player] === GameOver)  numberOfPlayersAlive--;
                         }
@@ -2375,7 +2374,7 @@ var x;
 
 			if (GameMode === CrisisMode)
 			{
-				var playersAlive = 0;
+				let playersAlive = 0;
 				if (PlayerStatus[0] !== GameOver)  playersAlive++;
 				if (PlayerStatus[1] !== GameOver)  playersAlive++;
 				if (PlayerStatus[2] !== GameOver)  playersAlive++;
@@ -2393,9 +2392,9 @@ var x;
 //-------------------------------------------------------------------------------------------------
 function ComputeComputerPlayerMove()
 {
-var tempCPUPlayerEnabled = CPUPlayerEnabled;
-var posY;
-var posX;
+let tempCPUPlayerEnabled = CPUPlayerEnabled;
+let posY;
+let posX;
 
     if (PlayerStatus[Player] !== PieceFalling)  return;
 
@@ -2410,9 +2409,9 @@ var posX;
     {
         DeletePieceFromPlayfieldMemory(Current);
 
-        for (var indexX = (PlayfieldStartX[Player]-2); indexX < (PlayfieldEndX[Player]-1); indexX+=1)
+        for (let indexX = (PlayfieldStartX[Player]-2); indexX < (PlayfieldEndX[Player]-1); indexX+=1)
         {
-            for (var indexRot = 1; indexRot < 5; indexRot+=1)
+            for (let indexRot = 1; indexRot < 5; indexRot+=1)
             {
                 MoveOneBlockCavernHoles[Player][indexX][indexRot] = 0;
                 MoveCompletedLines[Player][indexX][indexRot] = 0;
@@ -2422,15 +2421,15 @@ var posX;
             }
         }
       
-        for (var pieceTestX = (PlayfieldStartX[Player]-2); pieceTestX < (PlayfieldEndX[Player]-1); pieceTestX+=1)
+        for (let pieceTestX = (PlayfieldStartX[Player]-2); pieceTestX < (PlayfieldEndX[Player]-1); pieceTestX+=1)
         {
-            for (var rotationTest = 1; rotationTest <= MaxRotationArray[ Piece[Player] ]; rotationTest+=1)
+            for (let rotationTest = 1; rotationTest <= MaxRotationArray[ Piece[Player] ]; rotationTest+=1)
             {
-                var TEMP_PieceRotation;
+                let TEMP_PieceRotation;
                 TEMP_PieceRotation = PieceRotation[Player];
-                var TEMP_PiecePlayfieldX;
+                let TEMP_PiecePlayfieldX;
                 TEMP_PiecePlayfieldX = PiecePlayfieldX[Player];
-                var TEMP_PiecePlayfieldY;
+                let TEMP_PiecePlayfieldY;
                 TEMP_PiecePlayfieldY = PiecePlayfieldY[Player];
 
                 PiecePlayfieldX[Player] = pieceTestX;
@@ -2455,7 +2454,7 @@ var posX;
                     MoveTrappedHoles[Player][pieceTestX][rotationTest] = 0;
                     for (posX = PlayfieldStartX[Player]; posX < PlayfieldEndX[Player]; posX+=1)
                     {
-                        var numberOfEmpties;
+                        let numberOfEmpties;
                         numberOfEmpties = 0;
                         for (posY = 23; posY > 4; posY-=1)
                         {
@@ -2475,7 +2474,7 @@ var posX;
                     MovePlayfieldBoxEdges[Player][pieceTestX][rotationTest] = 0;
                     for (posY = 5; posY < 25; posY+=1)
                     {
-                        var boxTotal;
+                        let boxTotal;
                         boxTotal = 0;
                         for ( posX = (PlayfieldStartX[Player]-1); posX < PlayfieldEndX[Player]; posX+=1 )
                         {
@@ -2527,22 +2526,22 @@ var posX;
 
         BestMoveX[Player] = -1;
         BestRotation[Player] = -1;
-        var bestValue;
+        let bestValue;
         bestValue = 999999;
         for (posX = (PlayfieldStartX[Player]-1); posX < (PlayfieldEndX[Player]-1); posX+=1)
         {
-            for (var rot = 1; rot <= MaxRotationArray[ Piece[Player] ]; rot+=1)
+            for (let rot = 1; rot <= MaxRotationArray[ Piece[Player] ]; rot+=1)
             {
                 MovePieceHeight[Player][posX][rot]+=MoveCompletedLines[Player][posX][rot];
 
-                var testValue;
+                let testValue;
 
-                //--["Gift Of Sight" Tetris(R) A.I. Algorithm ~64,000+]---------------------------------------
+                //--["Gift Of Sight" Tetris(R) A.I. Algorithm ~32,000+]---------------------------------------
                 testValue = ( (3*MoveTrappedHoles[Player][posX][rot])
                             +(1*MoveOneBlockCavernHoles[Player][posX][rot])
                             +(1*MovePlayfieldBoxEdges[Player][posX][rot])
                             -(1*MovePieceHeight[Player][posX][rot]) );
-                //---------------------------------------["Gift Of Sight" Tetris(R) A.I. Algorithm ~64,000+]--
+                //---------------------------------------["Gift Of Sight" Tetris(R) A.I. Algorithm ~32,000+]--
 
                 if (MoveCompletedLines[Player][posX][rot] > 1)
                     testValue = ( 0 - (MoveCompletedLines[Player][posX][rot]*100) );

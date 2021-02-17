@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "interface.js"...
@@ -48,6 +47,15 @@ let ButtonSelectedByKeyboard = 0;
 let ButtonsWithCharsCanvases = [];
 let ctxButtonsWithCharsCanvases = [];
 
+let NumberOfOnscreenIcons = 0
+let IconIndex = [];
+let IconSpriteIndex = [];
+let IconScreenX = [];
+let IconScreenY = [];
+let IconAnimationTimer = [];
+let IconScale = [];
+let IconSelectedByPlayer;
+
 //--------------------------------------------------------------------------------------------------------------
 function CreateGUIArrowSet(index, x, y)
 {
@@ -67,24 +75,24 @@ function CreateGUIArrowSet(index, x, y)
 //--------------------------------------------------------------------------------------------------------------
 function DrawAllGUIArrowSetImages()
 {
-    var scaleOne = 1;
-    var scaleTwo = 1;
+    let scaleOne = 1;
+    let scaleTwo = 1;
 
     ctx.save();
 
-    for (var index = 0; index < NumberOfOnscreenArrowSets; index++)
+    for (let index = 0; index < NumberOfOnscreenArrowSets; index++)
     {
         scaleOne = 1;
         scaleTwo = 1;
 
-        var computedCenterX = GUISelectorLineSprite.width / 2 +.5;
-        var computedCenterY = GUISelectorLineSprite.height / 2 + .5;
+        let computedCenterX = GUISelectorLineSprite.width / 2 +.5;
+        let computedCenterY = GUISelectorLineSprite.height / 2 + .5;
 
-        var computedCenterXtwo = GUIArrowsSprites[0].width / 2 + .5;
-        var computedCenterYtwo = GUIArrowsSprites[0].height / 2 + .5;
+        let computedCenterXtwo = GUIArrowsSprites[0].width / 2 + .5;
+        let computedCenterYtwo = GUIArrowsSprites[0].height / 2 + .5;
 
-        var x = GUIArrowSetScreenX[index];
-        var y = GUIArrowSetScreenY[index];
+        let x = GUIArrowSetScreenX[index];
+        let y = GUIArrowSetScreenY[index];
 
         y-=21;
 
@@ -124,7 +132,7 @@ function DrawAllGUIArrowSetImages()
 //--------------------------------------------------------------------------------------------------------------
 function ThisArrowSetArrowWasPressed(index)
 {
-var returnValue = false;
+let returnValue = false;
    
     if (DelayAllUserInput === 0)
     {
@@ -135,7 +143,7 @@ var returnValue = false;
 
 	    ScreenIsDirty = true;
 
-	    PlaySoundEffect(0);
+	    PlaySoundEffect(1);
 	    DelayAllUserInput = 10;
 	}
 	else if (JoystickDirection[Any] === DOWN)
@@ -145,7 +153,7 @@ var returnValue = false;
 
 	    ScreenIsDirty = true;
 
-	    PlaySoundEffect(0);
+	    PlaySoundEffect(1);
 	    DelayAllUserInput = 10;
 	}
 
@@ -170,13 +178,13 @@ var returnValue = false;
 	    DelayAllUserInput = 10;
 	}
 
-	var x = GUIArrowSetScreenX[index];
-	var y = GUIArrowSetScreenY[index];
+	let x = GUIArrowSetScreenX[index];
+	let y = GUIArrowSetScreenY[index];
 
-	var arrowOneCenterX = (x - 375);
-	var arrowOneCenterY = (y-23);
-	var arrowTwoCenterX = (x + 375);
-	var arrowTwoCenterY = (y-23);
+	let arrowOneCenterX = (x - 375);
+	let arrowOneCenterY = (y-23);
+	let arrowTwoCenterX = (x + 375);
+	let arrowTwoCenterY = (y-23);
 
 	if (MouseButtonClicked === true && ArrowSetSelectedAnimationTimer === -1)
 	{
@@ -221,7 +229,7 @@ var returnValue = false;
 //--------------------------------------------------------------------------------------------------------------
 function DestroyAllGUIArrowSets()
 {
-    for (var index = 0; index < NumberOfOnscreenArrowSets; index++)
+    for (let index = 0; index < NumberOfOnscreenArrowSets; index++)
     {
 	GUIArrowSets[index] = -1;
 
@@ -240,9 +248,9 @@ function DestroyAllGUIArrowSets()
 //--------------------------------------------------------------------------------------------------------------
 function CreateGUIButtonsWithText()
 {
-var text;
+let text;
 
-    for (var index = 0; index < 7; index++)
+    for (let index = 0; index < 7; index++)
     {
         ButtonsWithTextCanvases[index] = document.createElement("canvas");
         ButtonsWithTextCanvases[index].width = "251";
@@ -250,7 +258,7 @@ var text;
         ctxButtonsWithTextCanvases[index] = ButtonsWithTextCanvases[index].getContext('2d');
     }
 
-    for (var indexTwo = 0; indexTwo < 7; indexTwo++)
+    for (let indexTwo = 0; indexTwo < 7; indexTwo++)
     {
         if (indexTwo === 0)  text = "START!";
         else if (indexTwo === 1)  text = "Options";
@@ -268,9 +276,9 @@ var text;
         ctxButtonsWithTextCanvases[indexTwo].textAlign = "center";
 
         ctxButtonsWithTextCanvases[indexTwo].fillStyle = "rgba(200, 200, 200, 1)";
-        for (var yOffSet = -1; yOffSet < 2; yOffSet+=2)
+        for (let yOffSet = -1; yOffSet < 2; yOffSet+=2)
         {
-            for (var xOffSet = -1; xOffSet < 2; xOffSet+=2)
+            for (let xOffSet = -1; xOffSet < 2; xOffSet+=2)
             {
                 ctxButtonsWithTextCanvases[indexTwo].fillText(text, 125+xOffSet, 29+yOffSet);
             }
@@ -280,7 +288,7 @@ var text;
         ctxButtonsWithTextCanvases[indexTwo].fillText(text, 125, 29);
     }
 
-    for (var indexThree = 0; indexThree < 67; indexThree++)
+    for (let indexThree = 0; indexThree < 67; indexThree++)
     {
         ButtonsWithCharsCanvases[indexThree] = document.createElement("canvas");
         ButtonsWithCharsCanvases[indexThree].width = "39";
@@ -292,7 +300,7 @@ var text;
         ImageSprites[indexThree+100].height = "30";
     }
 
-    for (var indexFour = 1; indexFour < 67; indexFour++)
+    for (let indexFour = 1; indexFour < 67; indexFour++)
     {
         if      (indexFour ===  1)  text = "A";
         else if (indexFour ===  2)  text = "B";
@@ -370,10 +378,10 @@ var text;
 	
         ctxButtonsWithCharsCanvases[indexFour].textAlign = "center";
 
-        ctxButtonsWithCharsCanvases[indexFour].fillStyle = "rgba(200, 200, 200, 1)";
-        for (var yOffSetTwo = -1; yOffSetTwo < 2; yOffSetTwo+=2)
+        ctxButtonsWithCharsCanvases[indexFour].fillStyle = "rgb(200,200,200)";
+        for (let yOffSetTwo = -1; yOffSetTwo < 2; yOffSetTwo+=2)
         {
-            for (var xOffSetTwo = -1; xOffSetTwo < 2; xOffSetTwo+=2)
+            for (let xOffSetTwo = -1; xOffSetTwo < 2; xOffSetTwo+=2)
             {
                 ctxButtonsWithCharsCanvases[indexFour].fillText(text, 19+xOffSetTwo, 15+7+yOffSetTwo);
             }
@@ -402,15 +410,15 @@ function CreateGUIButton(index, x, y)
 //--------------------------------------------------------------------------------------------------------------
 function DrawAllGUIButtonImages()
 {
-    var scale = 1;
+    let scale = 1;
 
-    for (var index = 0; index < NumberOfOnscreenButtons; index++)
+    for (let index = 0; index < NumberOfOnscreenButtons; index++)
     {
-        var computedCenterX = OriginalButtonSprite.width / 2;
-        var computedCenterY = OriginalButtonSprite.height / 2;
+        let computedCenterX = OriginalButtonSprite.width / 2;
+        let computedCenterY = OriginalButtonSprite.height / 2;
 
-        var x = GUIButtonScreenX[index];
-        var y = GUIButtonScreenY[index];
+        let x = GUIButtonScreenX[index];
+        let y = GUIButtonScreenY[index];
 
         if (index === ButtonThatWasSelected && ButtonSelectedAnimationTimer > 5)
         {
@@ -441,7 +449,7 @@ function ThisButtonWasPressed(index)
 
 	    ScreenIsDirty = true;
 
-	    PlaySoundEffect(0);
+	    PlaySoundEffect(1);
 	    DelayAllUserInput = 10;
 	}
 	else if (JoystickDirection[Any] === DOWN)
@@ -451,7 +459,7 @@ function ThisButtonWasPressed(index)
 
 	    ScreenIsDirty = true;
 
-	    PlaySoundEffect(0);
+	    PlaySoundEffect(1);
 	    DelayAllUserInput = 10;
 	}
 
@@ -486,7 +494,7 @@ function ThisButtonWasPressed(index)
 
 		ScreenIsDirty = true;
 
-                FirstHumanPlayerInput = Keyboard;
+		FirstHumanPlayerInput = Keyboard;
 
 		PlaySoundEffect(0);
 		DelayAllUserInput = 10;
@@ -507,7 +515,7 @@ function ThisButtonWasPressed(index)
 //--------------------------------------------------------------------------------------------------------------
 function DestroyAllButtons()
 {
-    for (var index = 0; index < NumberOfOnscreenButtons; index++)
+    for (let index = 0; index < NumberOfOnscreenButtons; index++)
     {
 	GUIButton[index] = -1;
 
@@ -523,17 +531,108 @@ function DestroyAllButtons()
 }
 
 //--------------------------------------------------------------------------------------------------------------
+function CreateIcon(spriteIndex, screenX, screenY)
+{
+    IconSelectedByPlayer = -1;
+
+    IconIndex[NumberOfOnscreenIcons] = NumberOfOnscreenIcons;
+    IconSpriteIndex[NumberOfOnscreenIcons] = spriteIndex;
+    IconScreenX[NumberOfOnscreenIcons] = screenX;
+    IconScreenY[NumberOfOnscreenIcons] = screenY;
+    IconAnimationTimer[NumberOfOnscreenIcons] = -1;
+    IconScale[NumberOfOnscreenIcons] = 1;
+
+    NumberOfOnscreenIcons++;
+}
+
+//--------------------------------------------------------------------------------------------------------------
+function DrawAllIcons()
+{
+    for (var index = 0; index < NumberOfOnscreenIcons; index++)
+    {
+        if (IconIndex[index] > -1)
+        {
+            var scale = 1;
+
+            var computedCenterX = ImageSprites[IconSpriteIndex[index]].width / 2;
+            var computedCenterY = ImageSprites[IconSpriteIndex[index]].height / 2;
+
+            var x = IconScreenX[index];
+            var y = IconScreenY[index];
+
+            if (IconAnimationTimer[index] > 5)
+            {
+                scale = 0.9;
+            }
+            else  scale = 1;
+
+            ctx.drawImage(  ImageSprites[IconSpriteIndex[index]], (x - ((computedCenterX) * scale) ), (y - ((computedCenterY) * scale) )
+                , (ImageSprites[IconSpriteIndex[index]].width * scale), (ImageSprites[IconSpriteIndex[index]].height * scale)  );
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------
+function ProcessAllIcons()
+{
+    IconSelectedByPlayer = -1;
+
+    for (var index = 0; index < NumberOfOnscreenIcons; index++)
+    {
+        if (IconIndex[index] > -1)
+        {
+            if (MouseButtonClicked === true && IconAnimationTimer[index] === -1)
+            {
+                if (  MouseX > ( IconScreenX[index] - (ImageSprites[IconSpriteIndex[index]].width/2) ) && MouseX < ( IconScreenX[index] + (ImageSprites[IconSpriteIndex[index]].width/2) )
+                    && MouseY > ( IconScreenY[index] - (ImageSprites[IconSpriteIndex[index]].height/2) ) &&  MouseY < ( IconScreenY[index] + (ImageSprites[IconSpriteIndex[index]].height/2) )  )
+                {
+                    IconAnimationTimer[index] = 10;
+                    IconSelectedByPlayer = index;
+                    PlaySoundEffect(0);
+                    ScreenIsDirty = true;
+                }
+            }
+        }
+
+        if (IconAnimationTimer[index] == 5)  ScreenIsDirty = true;
+
+        if (IconAnimationTimer[index] > -1)  IconAnimationTimer[index]--;
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------
+function DestroyAllIcons()
+{
+    IconSelectedByPlayer = -1;
+
+    for (var index = 0; index < NumberOfOnscreenIcons; index++)
+    {
+        if (IconIndex[index] > -1)
+        {
+            IconIndex[index] = -1;
+            IconSpriteIndex[index] = -1;
+            IconScreenX[index] = -9999;
+            IconScreenY[index] = -9999;
+            IconAnimationTimer[index] = -1;
+            IconScale[index] = 1;
+        }
+    }
+
+    NumberOfOnscreenIcons = 0;
+}
+
+//--------------------------------------------------------------------------------------------------------------
 function MouseOnGUI()
 {
-    for (var index = 0; index < NumberOfOnscreenArrowSets; index++)
+    for (let index = 0; index < NumberOfOnscreenArrowSets; index++)
     {
-        var x = GUIArrowSetScreenX[index];
-        var y = GUIArrowSetScreenY[index];
+        let x = GUIArrowSetScreenX[index];
+        let y = GUIArrowSetScreenY[index];
 
-        var arrowOneCenterX = (x - 375);
-        var arrowOneCenterY = (y-23);
-        var arrowTwoCenterX = (x + 375);
-        var arrowTwoCenterY = (y-23);
+        let arrowOneCenterX = (x - 375);
+        let arrowOneCenterY = (y-23);
+        let arrowTwoCenterX = (x + 375);
+        let arrowTwoCenterY = (y-23);
 
         if ( MouseX > (arrowOneCenterX - (46/2)) && MouseX < (arrowOneCenterX + (46/2))
         && MouseY > (arrowOneCenterY - (38/2)) && MouseY < (arrowOneCenterY + (38/2)) )
@@ -547,7 +646,7 @@ function MouseOnGUI()
         }
     }
 
-    for (var indexTwo = 0; indexTwo < NumberOfOnscreenButtons; indexTwo++)
+    for (let indexTwo = 0; indexTwo < NumberOfOnscreenButtons; indexTwo++)
     {
         if ( MouseX > (GUIButtonScreenX[indexTwo] - 125) && MouseX < (GUIButtonScreenX[indexTwo] + 125)
         && MouseY > (GUIButtonScreenY[indexTwo] - 20) &&  MouseY < (GUIButtonScreenY[indexTwo] + 20) )
@@ -555,6 +654,16 @@ function MouseOnGUI()
             return true;
         }
     }
-	
+
+    for (let indexThree = 0; indexThree < NumberOfOnscreenIcons; indexThree++)
+    {
+        if (  MouseX > ( IconScreenX[indexThree] - (ImageSprites[IconSpriteIndex[indexThree]].width/2) ) && MouseX < ( IconScreenX[indexThree] + (ImageSprites[IconSpriteIndex[indexThree]].width/2) )
+            && MouseY > ( IconScreenY[indexThree] - (ImageSprites[IconSpriteIndex[indexThree]].height/2) ) &&  MouseY < ( IconScreenY[indexThree] + (ImageSprites[IconSpriteIndex[indexThree]].height/2) )  )
+        {
+
+            return true;
+        }
+    }
+
     return false;
 }

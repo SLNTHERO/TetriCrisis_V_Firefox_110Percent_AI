@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "initialize.js"...
@@ -25,11 +24,6 @@ let InitLoaded = false;
 
 let VisualsLoaded = false;
 let AudioCacheLoaded = false;
-
-//let SoundType = null;
-
-//let MouseX = 0;
-//let MouseY = 0;
 
 let Browser = "null";
 
@@ -81,42 +75,27 @@ function InitSettings()
         Browser = "UNKNOWN Browser";
 
     SoundType = "null";
-    var audioTest = document.createElement('audio');
+    let audioTest = document.createElement('audio');
     if ( audioTest.canPlayType('audio/mpeg;') )  SoundType = "mp3";
     else  if ( audioTest.canPlayType('audio/ogg;') )  SoundType = "ogg";
     
-   var canvas = document.createElement('canvas');
-   var canvasFallingLetters = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
+    let canvasFallingLetters = document.createElement('canvas');
 
     canvas.id = "ScreenCanvas";
     canvas.width = 800;
     canvas.height = 480;
-    canvas.style.zIndex  = 0;
+    canvas.style.zIndex = "0";
     canvas.style.position = "absolute";
     canvas.style.border = "0px solid";
 
-
-
-
    if ( Browser === "Google Android" || Browser === "Apple iOS" || Browser === "Mobile Unknown" )
    {     
-//        canvas.id = "ScreenCanvas";
-//        canvas.width = 800;
-//        canvas.height = 480;
-//        canvas.style.zIndex  = 0;
-//        canvas.style.position = "absolute";
-//        canvas.style.border = "0px solid";
         canvas.style.top = "0%";
         canvas.style.left = "0%";
    }
    else
    {
-//        canvas.id = "ScreenCanvas";
-//        canvas.width = 800;
-//        canvas.height = 480;
-//        canvas.style.zIndex  = 0;
-//        canvas.style.position = "absolute";
-//        canvas.style.border = "0px solid";
         canvas.style.top = "50%";
         canvas.style.left = "50%";
     }
@@ -171,8 +150,8 @@ function Init()
     if (InitLoaded === true)  return;
     InitLoaded = true;
     
-    var test_canvas = document.createElement("canvas");
-    var canvascheck=!!(test_canvas.getContext);
+    let test_canvas = document.createElement("canvas");
+    let canvascheck=!!(test_canvas.getContext);
     if (canvascheck === false)  alert("This browser does not support HTML5, get Mozilla Firefox or Google Chrome!");
     
     GamepadUP = GamepadAxisOne;
@@ -188,11 +167,11 @@ function Init()
     LoadOptions();
     LoadImages();
 
-    var canvas = document.getElementById("ScreenCanvas");
+    let canvas = document.getElementById("ScreenCanvas");
 
     canvas.addEventListener("mousemove", function(event)
     {
-        var rect = canvas.getBoundingClientRect();
+        let rect = canvas.getBoundingClientRect();
         MouseX = Math.floor(event.clientX - rect.left);
         MouseY = Math.floor(event.clientY - rect.top);
 
@@ -223,7 +202,7 @@ function Init()
 
     document.body.style.backgroundColor = "Black";
     
-    for (var index = 0; index < 8; index++)
+    for (let index = 0; index < 8; index++)
     {
         JoystickDirection[index] = CENTER;
         JoystickButtonOne[index] = false;

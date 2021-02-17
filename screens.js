@@ -1,22 +1,21 @@
 /*
-  TetriCrisis V "Firefox" 110% A.I. - Puzzle game
-  Copyright (C) 2020 - 16BitSoft Inc.
+Copyright 2021 Team 16BitSoft
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
-  Email the author at: www.16BitSoft.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // "screens.js"...
@@ -89,11 +88,7 @@ let TestRotation;
 
 let ControlScheme;
 
-//let Player;
-
-//let FixTitleScreenMusic = false;
-
-let DelayToLoadAudio = 1;//100;
+let DelayToLoadAudio = 1;
 
 //--------------------------------------------------------------------------------------------------------------
 function ApplyScreenFade()
@@ -127,6 +122,7 @@ function ApplyScreenFade()
             ScreenToDisplay = NextScreenToDisplay;
             NumberOfOnscreenButtons = 0;
             NumberOfOnscreenArrowSets = 0;
+            NumberOfOnscreenIcons = 0;
             
             ClearTextCache();
         }
@@ -138,11 +134,11 @@ function ApplyScreenFade()
 //--------------------------------------------------------------------------------------------------------------
 function GameLoop()
 {
-var index;
+let index;
 
     frameCount++;
 
-    var CurrentTime = new Date().getTime();
+    let CurrentTime = new Date().getTime();
     if (CurrentTime > NextSecond)
     {
         FPS = frameCount;
@@ -160,16 +156,7 @@ var index;
     if (DEBUG === true)  ScreenIsDirty = true;
 
     if (ScreenToDisplay === 0)  DisplayLoadingNowScreen();
-    else if (ScreenToDisplay === 1)  Display1stRunAudioOption();
-    else if (ScreenToDisplay === 2)
-	{
-		
-		
-		
-
-		
-		DisplaySixteenBitSoftScreen();
-	}
+    else if (ScreenToDisplay === 2)  DisplaySixteenBitSoftScreen();
     else if (ScreenToDisplay === 3)  DisplayTitleScreen();
     else if (ScreenToDisplay === 4)  DisplayOptionsScreen();
     else if (ScreenToDisplay === 5)  DisplayHowToPlayScreen();
@@ -180,20 +167,23 @@ var index;
     else if (ScreenToDisplay === 10)  DisplayNewHighScoreNameInputScreen();
     else if (ScreenToDisplay === 11)  DisplayStoryVideo();
 	else if (ScreenToDisplay === 12)  DisplayAITestScreen();
+
+    DrawAllGUIButtonImages();
+    DrawAllIcons();
 	
     if (DEBUG === true && PAUSEgame === false && ScreenToDisplay !== 9)
     {
-        var screenY = 395;
-        var screenYoffset = 15;
+        let screenY = 395;
+        let screenYoffset = 15;
         for (index = 0; index < 1; index++)
         {
             if (Gamepads[index])  DrawTextOntoCanvas(10, "["+index+"]- "+Gamepads[index].id+"", 4, screenY, "left", 255, 255, 255, 0, 0, 0, 1);
             screenY-=screenYoffset;
         }
 
-        var xOffset = 0;
+        let xOffset = 0;
         DrawTextOntoCanvas(10, "mVol: "+MusicVolume+" sVol: "+SoundVolume+" Music OK:", 4, 410, "left", 255, 255, 255, 0, 0, 0, 1);
-        for (var musicIndex = 0; musicIndex < NumberOfMusics; musicIndex++)
+        for (let musicIndex = 0; musicIndex < NumberOfMusics; musicIndex++)
         {
             if (MusicIsCompletelyLoaded[musicIndex] === true)  DrawTextOntoCanvas(10, ""+musicIndex+"", 4+150+xOffset, 410, "left", 255, 255, 255, 0, 0, 0, 1);
             xOffset+=15;
@@ -206,7 +196,7 @@ var index;
 
         DrawTextOntoCanvas(10, ""+navigator.userAgent+"", 4, 440, "left", 255, 255, 255, 0, 0, 0, 1);
 
-        var numberOfGamepads = 0;
+        let numberOfGamepads = 0;
         for (index = 0; index < 5; index++)
         {
             if (USBGamepadsSupported)
@@ -277,9 +267,9 @@ var index;
 //--------------------------------------------------------------------------------------------------------------
 function DisplayLoadingNowScreen()
 {
-var allResourcesLoaded = false;
-var percent;
-var index;
+let allResourcesLoaded = false;
+let percent;
+let index;
 
     if (VisualsLoaded === false)
     {
@@ -340,14 +330,8 @@ var index;
 		
         LoadTimer = 0;
 
-        //if (FirstRunCheckAudio === true)  NextScreenToDisplay = 1;
-	    /*else*/  NextScreenToDisplay = 2;
-        
-		
-		
+        NextScreenToDisplay = 2;
 
-		
-		
         ScreenFadeStatus = 1;
     }
 	else if (DelayToLoadAudio > 0)
@@ -358,10 +342,6 @@ var index;
 			
 			PlaySoundEffect(0);
 			PlayMusic(0);
-
-				
-				
-				
 		}
 	}
 
@@ -388,25 +368,13 @@ var index;
         else
 		{
 			DrawTextOntoCanvas(25, "100%", 400, 240+20, "center", 255, 255, 255, 100, 100, 100, 1);
-
-    }
+		}
     
-    if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
-    {
-        CreateGUIButtonsWithText();
-
-	    PreloadAllStaffTexts();
-				
-		
-		
-		
-		
-		
-
-
-
-	}
-
+        if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
+        {
+            CreateGUIButtonsWithText();
+            PreloadAllStaffTexts();
+        }
     }
 }
 
@@ -481,51 +449,32 @@ function DisplaySixteenBitSoftScreen()
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
         NewGroundsLogoTimer = 0;
-        
-		
-	SixteenBitSoftScreenTimer = 350;
+
+	    SixteenBitSoftScreenTimer = 350;
 
         LogoAlphaTransition = 0;
         
         PAUSEgame = false;
 
-	//PlayMusic(0);
-        
         TestScale = 1;
         TestScaleDir = 0;
         TestRotation = 0;
-		
-
-		
-
     }
 
     if (JoystickButtonOne[Any] === true || MouseButtonClicked === true || KeyboardCharacterPressed === "_" || KeyboardCharacterPressed === "/")
     {
-	ScreenFadeStatus = 1;
-
-	DelayAllUserInput = 20;
+        NextScreenToDisplay = 3;
+        ScreenFadeStatus = 1;
+        DelayAllUserInput = 20;
     }
-    
-	
-	
-	
 
-	
-	
-	
-	
-/*	
-    if (NewGroundsLogoTimer > 1)  NewGroundsLogoTimer--;
-    else if (NewGroundsLogoTimer === 1)
+    if (KeyboardCharacterPressed === "T")
     {
-        if (LogoAlphaTransition < 1)  LogoAlphaTransition+=.1;
-        else
-        {
-            NewGroundsLogoTimer = 0;
-        }
+        NextScreenToDisplay = 12;
+        ScreenFadeStatus = 1;
     }
-    else*/ if (SixteenBitSoftScreenTimer > 0)
+
+    if (SixteenBitSoftScreenTimer > 0)
     {
         if (LogoAlphaTransition > 0)  LogoAlphaTransition -=.1;
         else  LogoAlphaTransition = 0;
@@ -534,7 +483,8 @@ function DisplaySixteenBitSoftScreen()
     }
     else
     {
-		ScreenFadeStatus = 1;
+        NextScreenToDisplay = 3;
+        ScreenFadeStatus = 1;
     }
 
 //    if (ScreenIsDirty === true)
@@ -543,13 +493,10 @@ function DisplaySixteenBitSoftScreen()
 
 		DrawSpriteOntoCanvas(10, 400, 240, TestScale, TestScale, TestRotation, 1, 255, 255, 255);
 
-		DrawTextOntoCanvas(20, "www.16BitSoft.com", 400, 475, "center", 0, 255, 0, 0, 100, 0, 1);
+		DrawTextOntoCanvas(20, "Team 16BitSoft", 400, 475, "center", 0, 255, 0, 0, 100, 0, 1);
 
         DrawSpriteOntoCanvas(0, 400, 240, 1, 1, 0, LogoAlphaTransition, 255, 255, 255);
     }
-
-//	{
-//	}
 
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
     {
@@ -557,23 +504,8 @@ function DisplaySixteenBitSoftScreen()
         GamepadConfigGetInput = 0;
 
         SetupTetrisCore();
-        
-        NextScreenToDisplay = 3;
 
 		CursorIsArrow = true;
-		
-		
-		//if (FixTitleScreenMusic === false)
-{
-//	FixTitleScreenMusic = true;
-//	SoundArray[0].volume = 1
-//	PlaySoundEffect(0);
-//	PlayMusic(0);
-//	MusicArray[CurrentlyPlayingMusicTrack].volume = 1;
-//	MusicArray[CurrentlyPlayingMusicTrack].pause();
-//	MusicArray[CurrentlyPlayingMusicTrack].play();
-}
-
     }
 }
 
@@ -582,8 +514,8 @@ function DisplayTitleScreen()
 {
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
-        var startScreenY = 195+28;
-        var screenYOffset = 42;
+        let startScreenY = 195+28;
+        let screenYOffset = 42;
 
         CreateGUIButton(0, 400, startScreenY);
         CreateGUIButton( 1, 400, startScreenY+(screenYOffset) );
@@ -591,6 +523,8 @@ function DisplayTitleScreen()
         CreateGUIButton( 3, 400, startScreenY+(3*screenYOffset) );
         CreateGUIButton( 4, 400, startScreenY+(4*screenYOffset) );
         CreateGUIButton( 5, 400, startScreenY+(5*screenYOffset) );
+
+        CreateIcon(15, 64, 415);
 
         LogoFlashScreenX = -50;
         
@@ -639,46 +573,12 @@ function DisplayTitleScreen()
         ScreenFadeStatus = 1;
     }  
 
-    if ( MouseY > (15-16) && MouseY < (15+16)
-	&& MouseX > (15-16) && MouseX < (15+16) )
-    {
-        CursorIsArrow = false;
-	
-        if (MouseButtonClicked === true)
-        {
-            if (SoundVolume > 0 || MusicVolume > 0) { SoundVolume = 0; MusicVolume = 0 }
-            else  { SoundVolume = .5; MusicVolume = 1; }
+    ProcessAllIcons();
 
-            PlaySoundEffect(0);
-            MusicArray[CurrentlyPlayingMusicTrack].volume = MusicVolume;
-            if (MusicVolume > 0)  MusicArray[CurrentlyPlayingMusicTrack].play();
-                else if (MusicVolume === 0)  MusicArray[CurrentlyPlayingMusicTrack].pause();
-
-            SaveOptions();
-
-            ScreenIsDirty = true;
-        }
-    }
-    
-    if ( MouseY > (415-64) && MouseY < (415+64)
-	&& MouseX > (64-64) && MouseX < (64+64) )
-    {
-        CursorIsArrow = false;
-
-        if (MouseButtonClicked === true)
-        {
-            window.open('http://opentetris.com/files/TC5/TC5-Retail1.zip','_self');
-        }
-    }
+    //if (IconSelectedByPlayer === 0)  window.open('http://opentetris.com/files/TC5/TC5-Retail1.zip','_self');
 
     if (LogoFlashScreenX < 950)  { LogoFlashScreenX+=15; ScreenIsDirty = true; }
 
-	if (KeyboardCharacterPressed === "T")
-	{
-		NextScreenToDisplay = 12;
-		ScreenFadeStatus = 1;
-	}
-	
     if (ScreenIsDirty === true)
     {
         DrawSpriteOntoCanvas(20, 400, 240, 1, 1, 0, 1, 255, 255, 255);
@@ -687,19 +587,12 @@ function DisplayTitleScreen()
         DrawSpriteOntoCanvas(32, LogoFlashScreenX, 90, 1, 1, 0, .75, 255, 255, 255);
         DrawSpriteOntoCanvas(31, 400, 89, 1, 1, 0, 1, 255, 255, 255);
 
-        if (SoundVolume > 0 || MusicVolume > 0)  DrawSpriteOntoCanvas(6, 15, 15, 1, 1, 0, 1, 255, 255, 255);
-        else  DrawSpriteOntoCanvas(5, 15, 15, 1, 1, 0, 1, 255, 255, 255);
-
         DrawTextOntoCanvas(25, "''"+HighScoresName[GameMode][0]+"'' Scored: "+HighScoresScore[GameMode][0]+"", 400, 197, "center", 255, 255, 0, 0, 0, 0, 1);
 
-        DrawAllGUIButtonImages();
-
-        DrawSpriteOntoCanvas(15, 64, 415, 1, 1, 0, 1, 255, 255, 255);
-
         DrawSpriteOntoCanvas(9, 800-40, 410, 1, 1, 0, 1, 255, 255, 255);
-        DrawTextOntoCanvas(15, "Retail 1 110% v5.0", 800-5, 475, "right", 255, 255, 255, 0, 0, 0, 1);
+        DrawTextOntoCanvas(15, "Retail 2 110% v5.0", 800-5, 475, "right", 255, 255, 255, 0, 0, 0, 1);
 
-        DrawTextOntoCanvas(20, "\u00A92017, By Team ''www.16BitSoft.com''", 400, 475, "center", 255, 255, 255, 0, 0, 0, 1);
+        DrawTextOntoCanvas(20, "\u00A92021, By Team 16BitSoft", 400, 475, "center", 255, 255, 255, 0, 0, 0, 1);
     }
     
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
@@ -708,7 +601,7 @@ function DisplayTitleScreen()
 
         DestroyAllButtons();
 
-        if (NextScreenToDisplay === -1)  window.open('http://16bitsoft.com','_self');
+        if (NextScreenToDisplay === -1)  window.open('https://fallenangelsoftware.com','_self');
     }
 }
 
@@ -846,7 +739,7 @@ function DisplayOptionsScreen()
         }
         else
         {
-            for (var gamepadIndex = 0; gamepadIndex < 1; gamepadIndex++)
+            for (let gamepadIndex = 0; gamepadIndex < 1; gamepadIndex++)
             {
                 GamepadUP = GamepadAxisOne;
                 GamepadRIGHT = GamepadAxisZero;
@@ -866,7 +759,7 @@ function DisplayOptionsScreen()
 
     if (GamepadConfigPadIndex > -1)
     {    
-        var gamepadInput = QueryGamepadsForInput();
+        let gamepadInput = QueryGamepadsForInput();
         if ( gamepadInput !== -1)
         {
             if (GamepadConfigGetInput === 0)
@@ -922,7 +815,7 @@ function DisplayOptionsScreen()
         DrawSpriteOntoCanvas(0, 400, 240, 1, 1, 0, .5, 255, 255, 255);
 
         if (FirstRunCheckAudio === false)  DrawTextOntoCanvas(25, "O P T I O N S:", 400, 26, "center", 255, 255, 0, 0, 0, 0, 1);
-        else  DrawTextOntoCanvas(25, "F I R S T   R U N   O P T I O N S:", 400, 26, "center", 255, 255, 0, 0, 0, 0, 1);
+        else  DrawTextOntoCanvas(25, "O P T I O N S:", 400, 26, "center", 255, 255, 0, 0, 0, 0, 1);
         DrawTextOntoCanvas(25, "________________________________________________", 400, 30, "center", 255, 255, 0, 0, 0, 0, 1);
 
 	    DrawAllGUIArrowSetImages();
@@ -989,8 +882,7 @@ function DisplayOptionsScreen()
         DrawTextOntoCanvas(15, "(Mozilla\u00AE Firefox Or Google\u00AE Chrome Only)", 400, 415, "center", 255, 255, 255, 0, 0, 0, 1);
 
         DrawTextOntoCanvas(25, "________________________________________________", 400, 424, "center", 255, 255, 0, 0, 0, 0, 1);
-        DrawAllGUIButtonImages();
-        
+
         if (GamepadConfigPadIndex !== -1)
         {
             DrawSpriteOntoCanvas(0, 400, 240, 1, 1, 0, .95, 255, 255, 255);
@@ -1106,7 +998,7 @@ function DisplayHowToPlayScreen()
         else if (ControlScheme === 1)  DrawTextOntoCanvas(20, "New Control", 400, 79-15, "center", 255, 255, 255, 0, 0, 0, 1);
         else if (ControlScheme === 2)  DrawTextOntoCanvas(20, "JeZxLee's Preferred Control", 400, 79-15, "center", 255, 255, 255, 0, 0, 0, 1);
 
-        var offsetY = 20;
+        let offsetY = 20;
 
         DrawSpriteOntoCanvas(29, 400, 220+offsetY, 1, 1, 0, 1, 255, 255, 255);
 
@@ -1139,7 +1031,6 @@ function DisplayHowToPlayScreen()
         }
 
         DrawTextOntoCanvas(25, "________________________________________________", 400, 424, "center", 255, 255, 0, 0, 0, 0, 1);
-        DrawAllGUIButtonImages();
     }
 
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
@@ -1210,11 +1101,11 @@ function DisplayHighScoresScreen()
         DrawTextOntoCanvas(20, "LEVEL:", 500, 106, "left", 255, 255, 255, 0, 0, 0, 1);
         DrawTextOntoCanvas(20, "SCORE:", 630, 106, "left", 255, 255, 255, 0, 0, 0, 1);
 
-        var greenBlue = 255;
-        var y = 130;
-        for (var index = 1; index < 11; index++)
+        let greenBlue = 255;
+        let y = 130;
+        for (let index = 1; index < 11; index++)
         {
-            var indexAdjusted = index - 1;
+            let indexAdjusted = index - 1;
 
             if ( Score[0] === parseInt(HighScoresScore[GameMode][indexAdjusted]) && Level[0] === parseInt(HighScoresLevel[GameMode][indexAdjusted]) )
             {
@@ -1240,13 +1131,15 @@ function DisplayHighScoresScreen()
             {
                 greenBlue = 255;
             }
-		    
+
             DrawTextOntoCanvas(20, ""+index+".", 6, y, "left", 255, 255, 255, 0, 0, 0, 1);
 
             DrawTextOntoCanvas(20, HighScoresName[GameMode][indexAdjusted], 36, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
 
-            if ( (GameMode === 5 && HighScoresLevel[GameMode][indexAdjusted] === 10) || (GameMode === 6 && HighScoresLevel[GameMode][indexAdjusted] === 31) )
+            if (GameMode === CrisisMode && HighScoresLevel[GameMode][indexAdjusted] === 10)
         	    DrawTextOntoCanvas(20, "Won!", 500, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
+            else if (GameMode === FirefoxStoryMode && HighScoresLevel[GameMode][indexAdjusted] === 31)
+                DrawTextOntoCanvas(20, "Won!", 500, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
             else
         	    DrawTextOntoCanvas(20, ""+HighScoresLevel[GameMode][indexAdjusted]+"", 500, y, "left", 255, greenBlue, greenBlue, 0, 0, 0, 1);
 
@@ -1256,7 +1149,6 @@ function DisplayHighScoresScreen()
         }
 
         DrawTextOntoCanvas(25, "________________________________________________", 400, 424, "center", 255, 255, 0, 0, 0, 0, 1);
-        DrawAllGUIButtonImages();
     }
 
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
@@ -1271,31 +1163,31 @@ function DisplayHighScoresScreen()
 //--------------------------------------------------------------------------------------------------------------
 function SetupStaffTextsScreenY()
 {
-var screenY = 450;
+let screenY = 450;
 
-    for (var index = 0; index < (NumberOfPreloadedStaffTexts+1); index++)
+    for (let index = 0; index < (NumberOfPreloadedStaffTexts+1); index++)
     {
         PreloadStaffTextsAlpha[index] = 1;
         
-	if (PreloadedStaffTextsBlue[index] === 0)
-	{
-	    screenY+=70;
-	    PreloadedStaffTextsScreenY[index] = screenY;
-	}
-	else if (PreloadedStaffTextsBlue[index] === 255)
-	{
-	    screenY+=30;
-	    PreloadedStaffTextsScreenY[index] = screenY;
-	}
-	
-	PreloadedStaffTextsScreenY[NumberOfPreloadedStaffTexts]+=240;
+        if (PreloadedStaffTextsBlue[index] === 0)
+        {
+            screenY+=(70+40);
+            PreloadedStaffTextsScreenY[index] = screenY;
+        }
+        else if (PreloadedStaffTextsBlue[index] === 255)
+        {
+            screenY+=30;
+            PreloadedStaffTextsScreenY[index] = screenY;
+        }
+
+        PreloadedStaffTextsScreenY[NumberOfPreloadedStaffTexts]+=240;
     }
 }
 
 //--------------------------------------------------------------------------------------------------------------
 function DisplayAboutScreen()
 {
-var index;
+let index;
 
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
@@ -1388,7 +1280,7 @@ var index;
         {
             DrawSpriteOntoCanvas(0, 400, 240, 1, 1, 0, .5, 255, 255, 255);
 
-            DrawPreloadedStaffTextOntoCanvas(0, 570, PreloadedStaffTextsScreenY[0]+50);
+            DrawPreloadedStaffTextOntoCanvas(0, 570, PreloadedStaffTextsScreenY[0]+50+40);
             for (index = 1; index < (NumberOfPreloadedStaffTexts+1); index++)  DrawPreloadedStaffTextOntoCanvas(index, 400, PreloadedStaffTextsScreenY[index]);
         }
     }
@@ -1403,18 +1295,18 @@ var index;
 
         CrisisWon = false;
 
-	CursorIsArrow = true;
+	    CursorIsArrow = true;
     }
 }
 
 //--------------------------------------------------------------------------------------------------------------
 function DisplayPlayingGameScreen()
 {
-var player;
-var boxScreenX;
-var boxScreenY;
-var y;
-var x;
+let player;
+let boxScreenX;
+let boxScreenY;
+let y;
+let x;
 
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
@@ -1534,9 +1426,9 @@ var x;
                 {
                     for (x = 2; x < 12; x++)
                     {
-                        var offsetX = 0;
-                        var offsetY = 0;                        
-                        for (var boxIndex = 1; boxIndex < 17; boxIndex++)
+                        let offsetX = 0;
+                        let offsetY = 0;
+                        for (let boxIndex = 1; boxIndex < 17; boxIndex++)
                         {
                             if ( PieceData [ Piece[player] ] [ PieceRotation[player] ] [boxIndex] === 1
                             && MouseMovePlayfieldX+offsetX === x && MouseMovePlayfieldY+offsetY === y )
@@ -1580,7 +1472,7 @@ var x;
             
             if (GameMode === TimeAttack30Mode || GameMode === TimeAttack60Mode || GameMode === TimeAttack120Mode)
             {
-                var taTimer = (TimeAttackTimer / 200);
+                let taTimer = (TimeAttackTimer / 200);
                 taTimer = Math.floor(taTimer);
                 DrawTextOntoCanvas(12, ""+taTimer+"", PlayersPlayfieldScreenX[player], 454, "center", 255, 255, 255, 0, 0, 0, 1);
             }
@@ -1590,9 +1482,9 @@ var x;
             }
         }
 
-        var numberOfGamepads = 0;
-        var gamepadUsed = new Array(5);
-        for (var index = 0; index < 5; index++)
+        let numberOfGamepads = 0;
+        let gamepadUsed = new Array(5);
+        for (let index = 0; index < 5; index++)
         {
             if (Gamepads[index])  numberOfGamepads++;
             
@@ -1625,7 +1517,7 @@ var x;
             gamepadUsed[ PlayerInput[4]-2 ] = true;
         }
 
-        var mouseInputAvailable = true;
+        let mouseInputAvailable = true;
 
         for (player = 0; player < 5; player++)
         {
@@ -1640,7 +1532,7 @@ var x;
                         DrawTextOntoCanvas(25, "Gamepad", PlayersPlayfieldScreenX[player], 260-15, "center", 255, 255, 255, 0, 0, 0, 0);
                         DrawTextOntoCanvas(25, "Join In!", PlayersPlayfieldScreenX[player], 260+15, "center", 255, 255, 255, 0, 0, 0, 0);
 
-                        for (var gamepadIndex = 0; gamepadIndex < 5; gamepadIndex++)
+                        for (let gamepadIndex = 0; gamepadIndex < 5; gamepadIndex++)
                         {
                             if (Gamepads[gamepadIndex] && JoystickButtonOne[gamepadIndex+2] === true && gamepadUsed[gamepadIndex] === false)
                             {
@@ -1677,7 +1569,7 @@ var x;
             }
         }
             
-        var humanStillPlaying = false;
+        let humanStillPlaying = false;
         if (PlayerInput[0] !== CPU && PlayerStatus[0] !== GameOver)  humanStillPlaying = true;
         if (PlayerInput[1] !== CPU && PlayerStatus[1] !== GameOver)  humanStillPlaying = true;
         if (PlayerInput[2] !== CPU && PlayerStatus[2] !== GameOver)  humanStillPlaying = true;
@@ -1714,7 +1606,7 @@ var x;
         }
     }
 
-    var allPlayersAreDead = true;
+    let allPlayersAreDead = true;
     for (player = 0; player < NumberOfPlayers; player++)
     {
         if (PlayerStatus[player] !== GameOver)  allPlayersAreDead = false;
@@ -1751,7 +1643,7 @@ var x;
 //--------------------------------------------------------------------------------------------------------------
 function DisplayPlayingStoryGameScreen()
 {
-var player;
+let player;
 
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
@@ -1834,11 +1726,11 @@ var player;
             else
                 DrawTextOntoCanvas(20, "Gamepad", PlayersPlayfieldScreenX[player], 475, "center", 255, 255, 255, 0, 0, 0, 0);
             
-            var boxScreenX = PlayersPlayfieldScreenX[player]-59;
-            var boxScreenY = PlayersPlayfieldScreenY[player]-212;
-            for (var y = 0; y < 26; y++)
+            let boxScreenX = PlayersPlayfieldScreenX[player]-59;
+            let boxScreenY = PlayersPlayfieldScreenY[player]-212;
+            for (let y = 0; y < 26; y++)
             {
-                for (var x = 2; x < 12; x++)
+                for (let x = 2; x < 12; x++)
                 {
                     if (Playfield[player][x][y] === 1)
                     {
@@ -1868,7 +1760,7 @@ var player;
             
             if (GameMode === TimeAttack30Mode || GameMode === TimeAttack60Mode || GameMode === TimeAttack120Mode)
             {
-                var taTimer = (TimeAttackTimer / 200);
+                let taTimer = (TimeAttackTimer / 200);
                 taTimer = Math.floor(taTimer);
                 DrawTextOntoCanvas(12, ""+taTimer+"", PlayersPlayfieldScreenX[player], 454, "center", 255, 255, 255, 0, 0, 0, 1);
             }
@@ -1919,7 +1811,7 @@ var player;
         }
     }
 
-    var allPlayersAreDead = true;
+    let allPlayersAreDead = true;
     for (player = 0; player < NumberOfPlayers; player++)
     {
         if (PlayerStatus[player] !== GameOver)  allPlayersAreDead = false;
@@ -1974,8 +1866,8 @@ var player;
 //--------------------------------------------------------------------------------------------------------------
 function DisplayNewHighScoreNameInputScreen()
 {
-var screenX;
-var index;
+let screenX;
+let index;
 
     if (ScreenFadeAlpha === 1 && ScreenFadeStatus === 0)
     {
@@ -1989,7 +1881,7 @@ var index;
 
         HighScoreJoyCharIndex = 1;
 
-        var screenXfix = 80;
+        let screenXfix = 80;
 
 	screenX = 80+screenXfix;
 	for (index = 1; index < 14; index++) // A-M
@@ -2242,7 +2134,6 @@ var index;
         }
 
         DrawTextOntoCanvas(25, "________________________________________________", 400, 424, "center", 255, 255, 0, 0, 0, 0, 1);
-        DrawAllGUIButtonImages();
     }
 
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
@@ -2343,11 +2234,6 @@ function DisplayStoryVideo()
         ScreenFadeStatus = 1;
         RemoveStoryVideo = true;
     }
-   
-//    if (ScreenIsDirty === true)
-    {
-
-    }
 
     if (ScreenFadeAlpha === .99 && ScreenFadeStatus === 1)
     {
@@ -2382,7 +2268,11 @@ function DisplayAITestScreen()
     {
         if (GameMode === CrisisMode)  PlayMusic(2);
         else  PlayMusic(1);
-        
+
+        MusicVolume = 0.0;
+        MusicArray[CurrentlyPlayingMusicTrack].volume = MusicVolume;
+        SoundVolume = 0.0;
+
 	    SetupForNewGameAITest();
     }
     
@@ -2433,7 +2323,7 @@ function DisplayAITestScreen()
     if (ScreenIsDirty === true)
     {
 		ctx.clearRect(0, 0, screenWidth, screenHeight);
-/*		
+
 		GameDisplayChanged = false;
         
         DrawSpriteOntoCanvas(20, 400, 240, 1, 1, 0, 1, 255, 255, 255);
@@ -2490,7 +2380,7 @@ function DisplayAITestScreen()
                 boxScreenY+=18;
             }
             
-            if (PlayerInput[player] == Mouse && PlayerStatus[player] == PieceFalling)
+            if (PlayerInput[player] === Mouse && PlayerStatus[player] === PieceFalling)
             {
                 boxScreenX = PlayersPlayfieldScreenX[player]-59;
                 boxScreenY = PlayersPlayfieldScreenY[player]-212;
@@ -2498,12 +2388,12 @@ function DisplayAITestScreen()
                 {
                     for (x = 2; x < 12; x++)
                     {
-                        var offsetX = 0;
-                        var offsetY = 0;                        
-                        for (var boxIndex = 1; boxIndex < 17; boxIndex++)
+                        let offsetX = 0;
+                        let offsetY = 0;
+                        for (let boxIndex = 1; boxIndex < 17; boxIndex++)
                         {
                             if ( PieceData [ Piece[player] ] [ PieceRotation[player] ] [boxIndex] === 1
-                            && MouseMovePlayfieldX+offsetX == x && MouseMovePlayfieldY+offsetY == y )
+                            && MouseMovePlayfieldX+offsetX === x && MouseMovePlayfieldY+offsetY === y )
                                 if (MouseMovePlayfieldY >= PiecePlayfieldY[player])
                                     DrawSpriteOntoCanvas(61, boxScreenX, boxScreenY, 1, 1, 0, .5, 255, 255, 255);
                     
@@ -2522,14 +2412,14 @@ function DisplayAITestScreen()
                     boxScreenY+=18;
                 }
             
-                if ( (MouseMovePlayfieldY < PiecePlayfieldY[player]) || (PiecePlayfieldX[player] == MouseMovePlayfieldX && PiecePlayfieldY[player] == MouseMovePlayfieldY) )
+                if ( (MouseMovePlayfieldY < PiecePlayfieldY[player]) || (PiecePlayfieldX[player] === MouseMovePlayfieldX && PiecePlayfieldY[player] === MouseMovePlayfieldY) )
                     DrawTextOntoCanvas(12, "Rotate", PieceMouseScreenX+13, PieceMouseScreenY-18, "center", 255, 255, 255, 0, 0, 0, 0);
                 else
                     DrawTextOntoCanvas(12, "Move", PieceMouseScreenX+13, PieceMouseScreenY-18, "center", 255, 255, 255, 0, 0, 0, 0);
             }
         }
 
-        if (GameMode == CrisisMode && Level[2] > 6)
+        if (GameMode === CrisisMode && Level[2] > 6)
         {
             for (player = 0; player < NumberOfPlayers; player++)
             {
@@ -2544,7 +2434,7 @@ function DisplayAITestScreen()
             
             if (GameMode === TimeAttack30Mode || GameMode === TimeAttack60Mode || GameMode === TimeAttack120Mode)
             {
-                var taTimer = (TimeAttackTimer / 200);
+                let taTimer = (TimeAttackTimer / 200);
                 taTimer = Math.floor(taTimer);
                 DrawTextOntoCanvas(12, ""+taTimer+"", PlayersPlayfieldScreenX[player], 454, "center", 255, 255, 255, 0, 0, 0, 1);
             }
@@ -2554,9 +2444,9 @@ function DisplayAITestScreen()
             }
         }
 
-        var numberOfGamepads = 0;
-        var gamepadUsed = new Array(5);
-        for (var index = 0; index < 5; index++)
+        let numberOfGamepads = 0;
+        let gamepadUsed = new Array(5);
+        for (let index = 0; index < 5; index++)
         {
             if (Gamepads[index])  numberOfGamepads++;
             
@@ -2589,46 +2479,36 @@ function DisplayAITestScreen()
             gamepadUsed[ PlayerInput[4]-2 ] = true;
         }
 
-        var mouseInputAvailable = true;
+        let mouseInputAvailable = true;
 
-        for (player = 0; player < 5; player++)
-        {
-            if (PlayerStatus[player] === GameOver)
-            {
-                DrawSpriteOntoCanvas(49 , PlayersPlayfieldScreenX[player], PlayersPlayfieldScreenY[player], 1, 1, 0, .75, 255, 255, 255);
+        for (player = 0; player < 5; player++) {
+            if (PlayerStatus[player] === GameOver) {
+                DrawSpriteOntoCanvas(49, PlayersPlayfieldScreenX[player], PlayersPlayfieldScreenY[player], 1, 1, 0, .75, 255, 255, 255);
 
-                if (PlayersCanJoin == true)
-                {
-                    if (numberOfGamepads > 0)
-                    {
-                        DrawTextOntoCanvas(25, "Gamepad", PlayersPlayfieldScreenX[player], 260-15, "center", 255, 255, 255, 0, 0, 0, 0);
-                        DrawTextOntoCanvas(25, "Join In!", PlayersPlayfieldScreenX[player], 260+15, "center", 255, 255, 255, 0, 0, 0, 0);
+                if (PlayersCanJoin === true) {
+                    if (numberOfGamepads > 0) {
+                        DrawTextOntoCanvas(25, "Gamepad", PlayersPlayfieldScreenX[player], 260 - 15, "center", 255, 255, 255, 0, 0, 0, 0);
+                        DrawTextOntoCanvas(25, "Join In!", PlayersPlayfieldScreenX[player], 260 + 15, "center", 255, 255, 255, 0, 0, 0, 0);
 
-                        for (var gamepadIndex = 0; gamepadIndex < 5; gamepadIndex++)
-                        {
-                            if (Gamepads[gamepadIndex] && JoystickButtonOne[gamepadIndex+2] === true && gamepadUsed[gamepadIndex] === false)
-                            {
-                                PlayerInput[player] = gamepadIndex+2;
+                        for (let gamepadIndex = 0; gamepadIndex < 5; gamepadIndex++) {
+                            if (Gamepads[gamepadIndex] && JoystickButtonOne[gamepadIndex + 2] === true && gamepadUsed[gamepadIndex] === false) {
+                                PlayerInput[player] = gamepadIndex + 2;
                                 PlayerStatus[player] = NewPieceDropping;
-                                
+
                                 gamepadIndex = 999;
                             }
                         }
 
                         numberOfGamepads--;
-                    }
-                    else if (mouseInputAvailable === true && MousePlaying === false)
-                    {
-                        DrawTextOntoCanvas(25, "Mouse", PlayersPlayfieldScreenX[player], 260-15, "center", 255, 255, 255, 0, 0, 0, 0);
-                        DrawTextOntoCanvas(25, "Join In!", PlayersPlayfieldScreenX[player], 260+15, "center", 255, 255, 255, 0, 0, 0, 0);
+                    } else if (mouseInputAvailable === true && MousePlaying === false) {
+                        DrawTextOntoCanvas(25, "Mouse", PlayersPlayfieldScreenX[player], 260 - 15, "center", 255, 255, 255, 0, 0, 0, 0);
+                        DrawTextOntoCanvas(25, "Join In!", PlayersPlayfieldScreenX[player], 260 + 15, "center", 255, 255, 255, 0, 0, 0, 0);
 
                         mouseInputAvailable = false;
-                        
-                        if (  MouseY > ( (PlayersPlayfieldScreenY[player])-230 ) && MouseY < ( (PlayersPlayfieldScreenY[player])+230 )
-                        && MouseX > ( (PlayersPlayfieldScreenX[player])-80 ) && MouseX < ( (PlayersPlayfieldScreenX[player])+80 )  )
-                        {
-                            if (MouseButtonClicked == true && MousePlaying === false)
-                            {
+
+                        if (MouseY > ((PlayersPlayfieldScreenY[player]) - 230) && MouseY < ((PlayersPlayfieldScreenY[player]) + 230)
+                            && MouseX > ((PlayersPlayfieldScreenX[player]) - 80) && MouseX < ((PlayersPlayfieldScreenX[player]) + 80)) {
+                            if (MouseButtonClicked === true && MousePlaying === false) {
                                 PlayerInput[player] = Mouse;
                                 PlayerStatus[player] = NewPieceDropping;
 
@@ -2636,24 +2516,10 @@ function DisplayAITestScreen()
                             }
                         }
                     }
-                }
-                else  DrawTextOntoCanvas(25, "Game Over!", PlayersPlayfieldScreenX[player], 260, "center", 255, 255, 255, 0, 0, 0, 0);
+                } else DrawTextOntoCanvas(25, "Game Over!", PlayersPlayfieldScreenX[player], 260, "center", 255, 255, 255, 0, 0, 0, 0);
             }
         }
-            
-        var humanStillPlaying = false;
-        if (PlayerInput[0] !== CPU && PlayerStatus[0] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[1] !== CPU && PlayerStatus[1] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[2] !== CPU && PlayerStatus[2] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[3] !== CPU && PlayerStatus[3] != GameOver)  humanStillPlaying = true;
-        if (PlayerInput[4] !== CPU && PlayerStatus[4] != GameOver)  humanStillPlaying = true;
-        if (humanStillPlaying == false && CPUPlayerEnabled > 0)
-        {
-            DrawTextOntoCanvas(25, "Continue Watching Or Press [Esc] Key On Keyboard To Exit!", PlayersPlayfieldScreenX[2], 290, "center", 200, 200, 200, 0, 0, 0, 0);
-            DrawTextOntoCanvas(25, "Continue Watching Or Press [Esc] Key On Keyboard To Exit!", PlayersPlayfieldScreenX[2], 296, "center", 150, 150, 150, 0, 0, 0, 0);
-            DrawTextOntoCanvas(25, "Continue Watching Or Press [Esc] Key On Keyboard To Exit!", PlayersPlayfieldScreenX[2], 293, "center", 255, 255, 255, 0, 0, 0, 0);
-        }
-    
+
         if (PAUSEgame === true && DEBUG === false && KeyboardSpaceBarFunction === 0)
         {
             DrawSpriteOntoCanvas(0, 400, 240, 1, 1, 0, .75, 255, 255, 255);
@@ -2668,7 +2534,7 @@ function DisplayAITestScreen()
             DrawTextOntoCanvas(55, "P A U S E D", PlayersPlayfieldScreenX[2], 270, "center", 255, 255, 255, 0, 0, 0, 0);
             DrawTextOntoCanvas(25, "Press [P] On Keyboard To Continue!", PlayersPlayfieldScreenX[2], 300, "center", 255, 255, 255, 0, 0, 0, 0);
         }
-*/    }
+    }
  
 	for (Player = 0; Player < NumberOfPlayers; Player++)
     {
@@ -2678,8 +2544,8 @@ function DisplayAITestScreen()
             DeletePieceFromPlayfieldMemory(DropShadow);
         }
     }
-/*
-    var allPlayersAreDead = true;
+
+    let allPlayersAreDead = true;
     for (player = 0; player < NumberOfPlayers; player++)
     {
         if (PlayerStatus[player] !== GameOver)  allPlayersAreDead = false;
@@ -2698,14 +2564,13 @@ function DisplayAITestScreen()
         ScreenFadeStatus = 1;
         GameOverDisplayTimer = 0;
     }
-*/
 
-    for (var playerTemp = 0; playerTemp < NumberOfPlayers; playerTemp++)
+    for (let playerTemp = 0; playerTemp < NumberOfPlayers; playerTemp++)
     {
         if (PlayerStatus[playerTemp] === GameOver)  AITestSetupComputerPlayer(playerTemp);
     }
 
-	var totalLines = (TotalOneLines+TotalTwoLines+TotalThreeLines+TotalFourLines)
+	let totalLines = (TotalOneLines+TotalTwoLines+TotalThreeLines+TotalFourLines)
 	
 	DrawTextOntoCanvas(30, "Total Games:"+NumberOfCPUGames+"", 400, 150, "center", 255, 255, 255, 0, 0, 0, 0);
 	DrawTextOntoCanvas(30, "Total Lines:"+totalLines/*TotalCPUPlayerLines*/+"", 400, 150+30, "center", 255, 255, 255, 0, 0, 0, 0);
